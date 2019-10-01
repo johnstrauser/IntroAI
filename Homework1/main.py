@@ -1,3 +1,5 @@
+import random
+
 def boardInit(n, m):
     "Initialize and return an empty 2d array for the board"
     "Array will be n x m"
@@ -8,10 +10,12 @@ def boardInit(n, m):
                 arr[j][i] = "X"
             elif i == 0 or i == n-1:
                 arr[j][i] = "X"
+            elif random.random() > 0.7:
+                arr[j][i] = "X"
             else:
                 arr[j][i] = " "
-            print(arr[j][i], end=" ")
-        print("")
+            "print(arr[j][i], end=" ")"
+        "print("")"
     return arr;
 
 def printBoard(arr,n,m):
@@ -23,6 +27,6 @@ def printBoard(arr,n,m):
         print("")
     return;
 
-n,m = 10,10;
+n,m = 50,50;
 arr = boardInit(n,m);
 printBoard(arr,n,m);
