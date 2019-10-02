@@ -75,11 +75,29 @@ def updateAgentBoard(arr,arr2,loc,n,m):
 n,m = 10,10;
 fullBoard = boardInit(n,m,1);
 agentBoard = boardInit(n,m,0);
+
 "place agent and target"
 agentLoc = placeAgent(fullBoard,n,m);
 agentBoard[agentLoc[0]][agentLoc[1]] = "a";
 targetLoc = placeTarget(fullBoard,n,m);
 agentBoard[targetLoc[0]][targetLoc[1]] = "t";
 updateAgentBoard(fullBoard,agentBoard,agentLoc,n,m);
+
 printBoard(fullBoard,n,m);
 printBoard(agentBoard,n,m);
+
+cont = 1;
+while (cont == 1):
+    "Use A* to calculate new path for agent"
+    
+    "Move agent one space along path"
+    
+    "Update the 'vision' of the agent"
+    
+    "Check if agent has reached target"
+
+    x = input("Enter 'n' for next step or 'q' for quit.");
+    if x == "q":
+        cont= 0;
+    
+
