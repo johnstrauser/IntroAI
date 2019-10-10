@@ -160,6 +160,17 @@ target = (targetLoc[0], targetLoc[1])
 cont = 1
 while (cont == 1):
     "Use A* to calculate new path for agent"
+    if("+ adjacent to agent")
+        #move agent to + on agent board
+        #update agentLoc
+        #add + to fulllBoard in agentloc
+        #update agent vision on agent board
+    else:
+        #ensure there are no + on board
+        #run a* to generate new path
+
+    if("agentLoc = targetLoc")
+        #done
     path = astar(fullBoard, agent, target)
     print(path)
     "Move agent one space along path"
