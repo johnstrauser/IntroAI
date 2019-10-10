@@ -81,13 +81,12 @@ def boardInit(n, m):
     arr = [[0 for x in range(m)] for y in range(n)]
     for i in range(n):
         for j in range(m):
-            # if j == 0 or j == m - 1:
-            #   arr[i][j] = "X"
-            # elif i == 0 or i == n - 1:
-            #   arr[i][j] = "X"
-            # else:
-            #   arr[i][j] = 0
-            arr[i][j] = 0
+            if j == 0 or j == m - 1:
+              arr[i][j] = "X"
+            elif i == 0 or i == n - 1:
+              arr[i][j] = "X"
+            else:
+              arr[i][j] = " "
     return arr
 
 
@@ -115,6 +114,36 @@ def updateAgentBoard(full, agent, loc, n, m):
         agent[loc[0]][loc[1] - 1] = "X"
     return
 
+def availablePath(agentBoard,agentLoc):
+    if agentBoard[agentLoc[0] + 1][agentLoc[1]] == "+" or agentBoard[agentLoc[0] + 1][agentLoc[1]] == "t":
+        agentBoard[agentLoc[0]][agentLoc[1]] = " "
+        agentLoc[0] += 1
+        agentBoard[agentLoc[0]][agentLoc[1]] = "a"
+        return 1
+    elif agentBoard[agentLoc[0] - 1][agentLoc[1]] == "+" or agentBoard[agentLoc[0] - 1][agentLoc[1]] == "t":
+        agentBoard[agentLoc[0]][agentLoc[1]] = " "
+        agentLoc[0] -= 1
+        agentBoard[agentLoc[0]][agentLoc[1]] = "a"
+        return 1
+    elif agentBoard[agentLoc[0]][agentLoc[1] + 1] == "+" or agentBoard[agentLoc[0]][agentLoc[1] + 1] == "t":
+        agentBoard[agentLoc[0]][agentLoc[1]] = " "
+        agentLoc[1] += 1
+        agentBoard[agentLoc[0]][agentLoc[1]] = "a"
+        return 1
+    elif agentBoard[agentLoc[0]][agentLoc[1] - 1] == "+" or agentBoard[agentLoc[0]][agentLoc[1] - 1] == "t":
+        agentBoard[agentLoc[0]][agentLoc[1]] = " "
+        agentLoc[1] -= 1
+        agentBoard[agentLoc[0]][agentLoc[1]] = "a"
+        return 1
+    return 0
+
+def removePath(board,n,m):
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == "+":
+                board[i][j] = " "
+        
+    return
 
 n, m = 50, 50
 fullBoard = boardInit(n, m)
@@ -135,50 +164,56 @@ for i in range(len(allLines)):
         index = allLines[i].index(",")
         agentLoc.append(int(allLines[i][0:index]))
         agentLoc.append(int(allLines[i][index + 1:len(allLines[i])]))
-        #fullBoard[agentLoc[0]][agentLoc[1]] = "a"
-        #agentBoard[agentLoc[0]][agentLoc[1]] = "a"
+        fullBoard[agentLoc[0]][agentLoc[1]] = "a"
+        agentBoard[agentLoc[0]][agentLoc[1]] = "a"
     elif i == 1:
         index = allLines[i].index(",")
         targetLoc.append(int(allLines[i][0:index]))
         targetLoc.append(int(allLines[i][index + 1:len(allLines[i])]))
-        #fullBoard[targetLoc[0]][targetLoc[1]] = "t"
-        #agentBoard[targetLoc[0]][targetLoc[1]] = "t"
+        fullBoard[targetLoc[0]][targetLoc[1]] = "t"
+        agentBoard[targetLoc[0]][targetLoc[1]] = "t"
     else:
         index = allLines[i].index(",")
         tempX = int(allLines[i][0:index])
         tempY = int(allLines[i][index + 1:len(allLines[i])])
-        fullBoard[tempX][tempY] = 1
+        fullBoard[tempX][tempY] = "X"
 
 
 print(str(agentLoc[0]) + "-" + str(agentLoc[1]))
 print(str(targetLoc[0]) + "-" + str(targetLoc[1]))
 updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
 
+agentBoard[agentLoc[0]+1][agentLoc[1]+1] = "+"
+
 printBoard(fullBoard, n, m)
-agent = (agentLoc[0], agentLoc[1])
-target = (targetLoc[0], targetLoc[1])
+printBoard(agentBoard,n,m)
 cont = 1
 while (cont == 1):
     "Use A* to calculate new path for agent"
-    if("+ adjacent to agent")
+    if availablePath(agentBoard,agentLoc) > 0:
         #move agent to + on agent board
         #update agentLoc
+        #above is done in availablePath()
+        
         #add + to fulllBoard in agentloc
+        if agentLoc[0] != targetLoc[0] or agentLoc[1] != targetLoc[1]:
+            fullBoard[agentLoc[0]][agentLoc[1]] = "+"
         #update agent vision on agent board
+        updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
+        #printBoard(fullBoard,n,m)
+        #printBoard(agentBoard,n,m)
     else:
         #ensure there are no + on board
+        removePath(agentBoard,n,m)
         #run a* to generate new path
+        #forwAStar()
+        #backAStar()
+        #adapAStar()
 
-    if("agentLoc = targetLoc")
-        #done
-    path = astar(fullBoard, agent, target)
-    print(path)
-    "Move agent one space along path"
-
-    "Update the 'vision' of the agent"
-
-    "Check if agent has reached target"
-
-    x = input("Enter 'n' for next step or 'q' for quit: ")
-    if x == "q":
+    if agentLoc[0] == targetLoc[0] and agentLoc[1] == targetLoc[1]:
+        #printBoard(fullBoard,n,m)
         cont = 0
+    if cont == 1:
+        x = input("Enter 'n' for next step or 'q' for quit: ")
+        if x == "q":
+            cont = 0
