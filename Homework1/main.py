@@ -183,7 +183,7 @@ print(str(agentLoc[0]) + "-" + str(agentLoc[1]))
 print(str(targetLoc[0]) + "-" + str(targetLoc[1]))
 updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
 
-agentBoard[agentLoc[0]+1][agentLoc[1]+1] = "+"
+#agentBoard[agentLoc[0]+1][agentLoc[1]+1] = "+"
 
 printBoard(fullBoard, n, m)
 printBoard(agentBoard,n,m)
