@@ -14,6 +14,14 @@ class Node():
     def __eq__(self, other):
         return self.position == other.position
 
+def getInsertLoc(list, f):
+    if len(list) == 0:
+        return 0
+    for i in range(len(list)):
+        if list[i].f > f:
+            return i
+    # use with list.insert(getInsertLoc(list,new_node.f),new_node)
+
 def findPath(open_list, closed_list, agent_node, target_node, fullBoard, agentBoard):
 
     if agent_node.position == target_node.position:
