@@ -1,4 +1,5 @@
 import random
+import math
 
 
 class Node():
@@ -14,66 +15,87 @@ class Node():
         return self.position == other.position
 
 
-def astar(board, agent, target):
-    agent_node = Node(None, agent)
-    agent_node.g = 0
-    agent_node.h = 0
-    agent_node.f = 0
-    target_node = Node(None, target)
-    target_node.g = 0
-    target_node.h = 0
-    target_node.f = 0
+def aStar(start_loc, end_loc, board):
     open_list = []
     closed_list = []
+    start_node = Node(None, start_loc)
+    end_node = Node(None, end_loc)
+    
+    current_node = start_node
+    # calculate the h value for the start(current) node
+    current_node.h = abs(end_node.position[0] - current_node.position[0]) + abs(end_node.position[1] - current_node.position[1])
 
-    open_list.append(agent_node)
-    while len(open_list) > 0:
-        current_node = open_list[0]
-        current_index = 0
-        for index, item in enumerate(open_list):
-            if item.f < current_node.f:
-                current_node = item
-                current_index = index
+    # calculate the f value for the start(current) node
+    current_node.f = current_node.g + current_node.h
 
-        open_list.pop(current_index)
-        closed_list.append(current_node)
-
-        if current_node == target_node:
-            path = []
-            current = current_node
-            while current is not None:
-                path.append(current.position)
-                current = current.parent
-            reversedPath = list(reversed(path))
-            return reversedPath
-
-        next = []
+    #while the current node is not the target node, loop
+    while (current_node.position[0] != end_loc[0] or current_node.position[1] != end_loc[1]):
+        #generate all possiblie expansions of current node in for loop
         for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
-            node_position = (
-                current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
-            if node_position[0] > (len(board) - 1) or node_position[0] < 0 or node_position[1] > (len(board[len(board) - 1]) - 1) or node_position[1] < 0:
-                continue
+            #calc new location
+            new_loc = [current_node.position[0]+new_position[0],current_node.position[1]+new_position[1]]
+            #if the new node is not a wall and has not already been closed, either update its f value and parent or add to open list
+            if board[new_loc[0]][new_loc[1]] != "X" and indexOf(closed_list, new_loc) == -1:
+                #initialize new node
+                new_node = Node(current_node, new_loc)
+                new_node.g = current_node.g + 1
+                new_node.h = abs(end_node.position[0] - new_node.position[0]) + abs(end_node.position[1] - new_node.position[1])
+                new_node.f = new_node.g + new_node.h
+                #get index of new node in open list
+                index = indexOf(open_list,new_node.position)
+                if index != -1:
+                    #if node exists in open list, check if the f value is better
+                    if open_list[index].f > new_node.f:
+                        #if f value is better, replace
+                        open_list[index] = new_node
+                else:
+                    #if node is not in open list, add to open list
+                    #TODO: make this function like a heap
+                    open_list.append(new_node)
+        #current node has been completely expanded, add to closed list
+        closed_list.append(current_node)
+        #TODO: make this function like a heap
+        small_index = getSmallest(open_list)
+        #if there is still a node in open list, get the one with the smallest f value
+        if small_index != -1:
+            current_node = open_list.pop(small_index)
+        else:
+            #if there is no node in open list, return -1 to indicate that there is no possible path
+            return -1
+    
+    #at this point either there is no possible path and the function has returned -1
+    #or the while loop has ended and current node should now be end node
+    #we can now draw the "+" by tracing back through the list of parents
+    #print("end node: "+str(current_node.position[0])+"-"+str(current_node.position[1]))
+    #print("parent of end node: "+str(current_node.parent.position[0])+"-"+str(current_node.parent.position[1]))
+    #input(" ")
+    
+    current_node = current_node.parent
+    while (current_node.position[0] != start_loc[0] or current_node.position[1] != start_loc[1]):
+        agentBoard[current_node.position[0]][current_node.position[1]] = "+"
+        current_node = current_node.parent
+    #return 1 to indicate completion
+    return 1
 
-            if board[node_position[0]][node_position[1]] != 0:
-                continue
-
-            new_node = Node(current_node, node_position)
-            next.append(new_node)
-
-        for step in next:
-            for closed_step in closed_list:
-                if step == closed_step:
-                    break
-            step.g = current_node.g + 1
-            step.h = (step.position[0] - target_node.position[0])**2 + \
-                (step.position[1] - target_node.position[1])**2
-            step.f = step.g + step.h
-
-            for open_node in open_list:
-                if step == open_node and step.g >= open_node.g:
-                    break
-            open_list.append(step)
-
+def getSmallest(list):
+    if len(list) == 0:
+        return -1
+    smallest = 999999
+    output = -1
+    for i in range(len(list)):
+        if list[i].f < smallest:
+            smallest = list[i].f
+            output = i
+    return output
+            
+def indexOf(list, loc):
+    #check if loc exists in list, i if true, -1 if false
+    if len(list) == 0:
+        return -1
+    for i in range(len(list)):
+        if list[i].position[0] == loc[0] and list[i].position[1] == loc[1]:
+            return i
+    return -1
 
 def boardInit(n, m):
     "Initialize and return an empty 2d array for the board"
@@ -185,8 +207,8 @@ updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
 
 #agentBoard[agentLoc[0]+1][agentLoc[1]+1] = "+"
 
-printBoard(fullBoard, n, m)
-printBoard(agentBoard,n,m)
+#printBoard(fullBoard, n, m)
+#printBoard(agentBoard,n,m)
 cont = 1
 while (cont == 1):
     "Use A* to calculate new path for agent"
@@ -201,17 +223,23 @@ while (cont == 1):
         #update agent vision on agent board
         updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
         #printBoard(fullBoard,n,m)
-        #printBoard(agentBoard,n,m)
+        printBoard(agentBoard,n,m)
     else:
         #ensure there are no + on board
         removePath(agentBoard,n,m)
         #run a* to generate new path
-        #forwAStar()
-        #backAStar()
+        
+        #below is forward a*
+        #aStar(agentLoc, targetLoc, agentBoard)
+        
+        #below is backward a*
+        aStar(targetLoc, agentLoc, agentBoard)
+        printBoard(agentBoard,n,m)
+        #input(" ")
         #adapAStar()
 
     if agentLoc[0] == targetLoc[0] and agentLoc[1] == targetLoc[1]:
-        #printBoard(fullBoard,n,m)
+        printBoard(fullBoard,n,m)
         cont = 0
     if cont == 1:
         x = input("Enter 'n' for next step or 'q' for quit: ")
