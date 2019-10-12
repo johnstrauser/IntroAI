@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 
 def placeAgent(n,m):
     "pick a random x and y, place agent"
@@ -26,11 +27,13 @@ def placeTarget(agentLoc,n,m):
 
 def writeBoard(agentLoc,targetLoc,n,m):
     x = input("Enter an index for the file name: ");
-    fileRoot = ".\mazes\maze";
-    fileTail = ".txt";
-    fileName = fileRoot + str(x) + fileTail;
+    data_folder = Path("./mazes/")
+    fileNameRoot = "maze"
+    fileTail = ".txt"
+    fileName = fileNameRoot + str(x) + fileTail
+    fullFilePath = data_folder / fileName
     
-    file = open(fileName,"w+");
+    file = open(fullFilePath,"w+");
     file.write(str(agentLoc[0])+","+str(agentLoc[1])+"\n");
     file.write(str(targetLoc[0])+","+str(targetLoc[1])+"\n");
     

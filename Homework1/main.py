@@ -1,6 +1,6 @@
 import random
 import math
-
+from pathlib import Path
 
 class Node():
 
@@ -173,10 +173,12 @@ agentBoard = boardInit(n, m)
 
 fileFound = 0
 x = input("Enter an index for which maze to load: ")
-fileRoot = ".\mazes\maze"
+data_folder = Path("./mazes/")
+fileNameRoot = "maze"
 fileTail = ".txt"
-fileName = fileRoot + str(x) + fileTail
-file = open(fileName, "r")
+fileName = fileNameRoot + str(x) + fileTail
+fullFilePath = data_folder / fileName
+file = open(fullFilePath, "r")
 
 allLines = file.readlines()
 agentLoc = []
