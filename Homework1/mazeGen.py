@@ -48,7 +48,7 @@ def writeBoard(agentLoc,targetLoc,n,m):
     file.close();
     return;
 
-n,m = 50,50;
+n,m = 101,101;
 agentLoc = placeAgent(n,m);
 targetLoc = placeTarget(agentLoc,n,m);
 

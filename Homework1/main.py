@@ -20,6 +20,7 @@ def aStar(start_loc, end_loc, board):
     closed_list = []
     start_node = Node(None, start_loc)
     end_node = Node(None, end_loc)
+    count = 0
     
     current_node = start_node
     # calculate the h value for the start(current) node
@@ -27,7 +28,6 @@ def aStar(start_loc, end_loc, board):
 
     # calculate the f value for the start(current) node
     current_node.f = current_node.g + current_node.h
-
     #while the current node is not the target node, loop
     while (current_node.position[0] != end_loc[0] or current_node.position[1] != end_loc[1]):
         #generate all possiblie expansions of current node in for loop
@@ -54,6 +54,7 @@ def aStar(start_loc, end_loc, board):
                     open_list.append(new_node)
         #current node has been completely expanded, add to closed list
         closed_list.append(current_node)
+        count += 1
         #TODO: make this function like a heap
         small_index = getSmallest(open_list)
         #if there is still a node in open list, get the one with the smallest f value
@@ -66,16 +67,13 @@ def aStar(start_loc, end_loc, board):
     #at this point either there is no possible path and the function has returned -1
     #or the while loop has ended and current node should now be end node
     #we can now draw the "+" by tracing back through the list of parents
-    #print("end node: "+str(current_node.position[0])+"-"+str(current_node.position[1]))
-    #print("parent of end node: "+str(current_node.parent.position[0])+"-"+str(current_node.parent.position[1]))
-    #input(" ")
     
     current_node = current_node.parent
     while (current_node.position[0] != start_loc[0] or current_node.position[1] != start_loc[1]):
         agentBoard[current_node.position[0]][current_node.position[1]] = "+"
         current_node = current_node.parent
-    #return 1 to indicate completion
-    return 1
+    #return count to indicate completion
+    return count
 
 def getSmallest(list):
     if len(list) == 0:
@@ -167,7 +165,7 @@ def removePath(board,n,m):
         
     return
 
-n, m = 50, 50
+n, m = 101, 101
 fullBoard = boardInit(n, m)
 agentBoard = boardInit(n, m)
 
@@ -207,12 +205,12 @@ print(str(agentLoc[0]) + "-" + str(agentLoc[1]))
 print(str(targetLoc[0]) + "-" + str(targetLoc[1]))
 updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
 
-#agentBoard[agentLoc[0]+1][agentLoc[1]+1] = "+"
-
-#printBoard(fullBoard, n, m)
+printBoard(fullBoard, n, m)
 #printBoard(agentBoard,n,m)
+
+count = 0
 cont = 1
-while (cont == 1):
+while (cont > 0):
     "Use A* to calculate new path for agent"
     if availablePath(agentBoard,agentLoc) > 0:
         #move agent to + on agent board
@@ -225,25 +223,38 @@ while (cont == 1):
         #update agent vision on agent board
         updateAgentBoard(fullBoard, agentBoard, agentLoc, n, m)
         #printBoard(fullBoard,n,m)
-        printBoard(agentBoard,n,m)
+        if cont != 2:
+            printBoard(agentBoard,n,m)
     else:
         #ensure there are no + on board
         removePath(agentBoard,n,m)
         #run a* to generate new path
         
         #below is forward a*
-        #aStar(agentLoc, targetLoc, agentBoard)
-        
+        out = aStar(agentLoc, targetLoc, agentBoard)
         #below is backward a*
-        aStar(targetLoc, agentLoc, agentBoard)
-        printBoard(agentBoard,n,m)
+        #out = aStar(targetLoc, agentLoc, agentBoard)
+        
         #input(" ")
-        #adapAStar()
+        #out = adapAStar()
+        
+        if cont != 2:
+            printBoard(agentBoard,n,m)
+        if out == -1:
+            print("No path could be found from the agent to the target.")
+            cont = -1
+            break;
+        else:
+            count += out
+        
 
     if agentLoc[0] == targetLoc[0] and agentLoc[1] == targetLoc[1]:
         printBoard(fullBoard,n,m)
+        print("Count of expanded nodes: "+str(count))
         cont = 0
     if cont == 1:
-        x = input("Enter 'n' for next step or 'q' for quit: ")
+        x = input("Enter 'n' for next step, 'f' to skip to the final output, or 'q' for quit: ")
         if x == "q":
             cont = 0
+        elif x == "f":
+            cont = 2
