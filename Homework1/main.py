@@ -1,5 +1,6 @@
 import random
 import math
+import heapq
 from pathlib import Path
 
 class Node():
@@ -13,6 +14,15 @@ class Node():
 
     def __eq__(self, other):
         return self.position == other.position
+    
+    def __lt__(self, other):
+        if self.f != other.f:
+            return self.f < other.f
+        else:
+            #if two f values are equal, use g value
+            #flip this '<' to '>' for tiebreaker part of assignment
+            return self.g < other.g
+                
 
 
 def aStar(start_loc, end_loc, board):
@@ -47,26 +57,24 @@ def aStar(start_loc, end_loc, board):
                     #if node exists in open list, check if the f value is better
                     if open_list[index].f > new_node.f:
                         #if f value is better, replace and sort
-                        open_list.pop(index)
-                        insert_loc = getInsertLoc(open_list, new_node.f, new_node.g)
-                        open_list.insert(insert_loc,new_node)
+                        open_list[index] = new_node
+                        heapq.heapify(open_list)
+                        
                 else:
                     #if node is not in open list, add to open list
-                    #TODO: make this function like a heap
-                    insert_loc = getInsertLoc(open_list, new_node.f, new_node.g)
-                    if insert_loc == -1:
-                        open_list.append(new_node)
-                    else:
-                        open_list.insert(insert_loc,new_node)
+                    #line below this is for tiebreaker in favor of larger g val
+                    #heapq.heappush(open_list,(new_node.f,new_node.g*(-1),new_node))
+                    #line below this is for tiebreaker in favor of smaller g val
+                    heapq.heappush(open_list,new_node)
+                    
         #current node has been completely expanded, add to closed list
         closed_list.append(current_node)
         count += 1
-        #TODO: make this function like a heap
         #smallest f value should be the first index of the list
         if len(open_list) == 0:
             return -1
         else:
-            current_node = open_list.pop(0)
+            current_node = heapq.heappop(open_list)
             
     
     #at this point either there is no possible path and the function has returned -1
@@ -79,18 +87,7 @@ def aStar(start_loc, end_loc, board):
         current_node = current_node.parent
     #return count to indicate completion
     return count
-
-def getInsertLoc(list, f, g):
-    if len(list) == 0:
-        return 0
-    for i in range(len(list)):
-        #Flip the second half of this if statement for part 2
-        if list[i].f == f and list[i].g > g:
-            return i
-        if list[i].f > f:
-            return i
-    return -1
-            
+        
 def indexOf(list, loc):
     #check if loc exists in list, i if true, -1 if false
     if len(list) == 0:
