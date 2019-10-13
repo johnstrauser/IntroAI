@@ -87,6 +87,79 @@ def aStar(start_loc, end_loc, board):
         current_node = current_node.parent
     #return count to indicate completion
     return count
+    
+def adapAStar(start_loc, end_loc, board, old_closed_list):
+    open_list = []
+    closed_list = []
+    start_node = Node(None, start_loc)
+    end_node = Node(None, end_loc)
+    count = 0
+    
+    current_node = start_node
+    # calculate the h value for the start(current) node
+    old_index = indexOf(old_closed_list, start_loc)
+    old_target_index = indexOf(old_closed_list, end_loc)
+    if old_index == -1:
+        current_node.h = abs(end_node.position[0] - current_node.position[0]) + abs(end_node.position[1] - current_node.position[1])
+    else:
+        current_node.h = (old_closed_list[old_target_index].g) - (old_closed_list[old_index].g)
+
+    # calculate the f value for the start(current) node
+    current_node.f = current_node.g + current_node.h
+    #while the current node is not the target node, loop
+    while (current_node.position[0] != end_loc[0] or current_node.position[1] != end_loc[1]):
+        #generate all possiblie expansions of current node in for loop
+        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+            #calc new location
+            new_loc = [current_node.position[0]+new_position[0],current_node.position[1]+new_position[1]]
+            #if the new node is not a wall and has not already been closed, either update its f value and parent or add to open list
+            if board[new_loc[0]][new_loc[1]] != "X" and indexOf(closed_list, new_loc) == -1:
+                #initialize new node
+                new_node = Node(current_node, new_loc)
+                new_node.g = current_node.g + 1
+                old_index = indexOf(old_closed_list, new_loc)
+                if old_index == -1:
+                    new_node.h = abs(end_node.position[0] - new_node.position[0]) + abs(end_node.position[1] - new_node.position[1])
+                else:
+                    new_node.h = (old_closed_list[old_target_index].g) - (old_closed_list[old_index].g)
+                new_node.f = new_node.g + new_node.h
+                #get index of new node in open list
+                index = indexOf(open_list,new_node.position)
+                if index != -1:
+                    #if node exists in open list, check if the f value is better
+                    if open_list[index].f > new_node.f:
+                        #if f value is better, replace and sort
+                        open_list[index] = new_node
+                        heapq.heapify(open_list)
+                        
+                else:
+                    #if node is not in open list, add to open list
+                    #line below this is for tiebreaker in favor of larger g val
+                    #heapq.heappush(open_list,(new_node.f,new_node.g*(-1),new_node))
+                    #line below this is for tiebreaker in favor of smaller g val
+                    heapq.heappush(open_list,new_node)
+                    
+        #current node has been completely expanded, add to closed list
+        closed_list.append(current_node)
+        count += 1
+        #smallest f value should be the first index of the list
+        if len(open_list) == 0:
+            return -1,[]
+        else:
+            current_node = heapq.heappop(open_list)
+            
+    
+    #at this point either there is no possible path and the function has returned -1
+    #or the while loop has ended and current node should now be end node
+    #we can now draw the "+" by tracing back through the list of parents
+    
+    current_node = current_node.parent
+    while (current_node.position[0] != start_loc[0] or current_node.position[1] != start_loc[1]):
+        agentBoard[current_node.position[0]][current_node.position[1]] = "+"
+        current_node = current_node.parent
+    #return count to indicate completion
+    old_closed_list = closed_list
+    return count, old_closed_list
         
 def indexOf(list, loc):
     #check if loc exists in list, i if true, -1 if false
@@ -212,6 +285,7 @@ printBoard(fullBoard, n, m)
 
 count = 0
 cont = 1
+old_closed_list = []
 while (cont > 0):
     "Use A* to calculate new path for agent"
     if availablePath(agentBoard,agentLoc) > 0:
@@ -233,12 +307,11 @@ while (cont > 0):
         #run a* to generate new path
         
         #below is forward a*
-        out = aStar(agentLoc, targetLoc, agentBoard)
+        #out = aStar(agentLoc, targetLoc, agentBoard)
         #below is backward a*
         #out = aStar(targetLoc, agentLoc, agentBoard)
-        
-        #input(" ")
-        #out = adapAStar()
+        #below is adaptive a*
+        out, old_closed_list = adapAStar(agentLoc, targetLoc, agentBoard, old_closed_list)
         
         if cont != 2:
             printBoard(agentBoard,n,m)
