@@ -46,23 +46,28 @@ def aStar(start_loc, end_loc, board):
                 if index != -1:
                     #if node exists in open list, check if the f value is better
                     if open_list[index].f > new_node.f:
-                        #if f value is better, replace
-                        open_list[index] = new_node
+                        #if f value is better, replace and sort
+                        open_list.pop(index)
+                        insert_loc = getInsertLoc(open_list, new_node.f, new_node.g)
+                        open_list.insert(insert_loc,new_node)
                 else:
                     #if node is not in open list, add to open list
                     #TODO: make this function like a heap
-                    open_list.append(new_node)
+                    insert_loc = getInsertLoc(open_list, new_node.f, new_node.g)
+                    if insert_loc == -1:
+                        open_list.append(new_node)
+                    else:
+                        open_list.insert(insert_loc,new_node)
         #current node has been completely expanded, add to closed list
         closed_list.append(current_node)
         count += 1
         #TODO: make this function like a heap
-        small_index = getSmallest(open_list)
-        #if there is still a node in open list, get the one with the smallest f value
-        if small_index != -1:
-            current_node = open_list.pop(small_index)
-        else:
-            #if there is no node in open list, return -1 to indicate that there is no possible path
+        #smallest f value should be the first index of the list
+        if len(open_list) == 0:
             return -1
+        else:
+            current_node = open_list.pop(0)
+            
     
     #at this point either there is no possible path and the function has returned -1
     #or the while loop has ended and current node should now be end node
@@ -75,16 +80,16 @@ def aStar(start_loc, end_loc, board):
     #return count to indicate completion
     return count
 
-def getSmallest(list):
+def getInsertLoc(list, f, g):
     if len(list) == 0:
-        return -1
-    smallest = 999999
-    output = -1
+        return 0
     for i in range(len(list)):
-        if list[i].f < smallest:
-            smallest = list[i].f
-            output = i
-    return output
+        #Flip the second half of this if statement for part 2
+        if list[i].f == f and list[i].g > g:
+            return i
+        if list[i].f > f:
+            return i
+    return -1
             
 def indexOf(list, loc):
     #check if loc exists in list, i if true, -1 if false
