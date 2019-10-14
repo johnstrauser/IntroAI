@@ -108,13 +108,13 @@ Through observation, we notice that RFA* is way faster than RBA*. The difference
 
 \section*{Part 4}
 \hspace{5mm}
-The h-value calculates the sum of the distances of the tiles from their goal positions. Since the agent cannot move along diagonals, the distance is the sum of the horizontal and vertical distances. The formula that we used in our project to calculate Manhattan distance is Manhattan Distance = abs(Horizontal Distance) + abs(Vertical Distance). This is only consistent when agent is allowed to move only in the four main compass directions. The counterexample is (Use diagram and explain if agent can move diagonally if goal position is three diagonal steps away, Manhattan distance is 6 so it becomes inconsistent).
-From the lecture slides, the heuristic function is said to be consistent if
-        for all(n, a, n’) : h(n) <= c(n, a, n’) + h(n’)
-where c(n, a, n’) is the step cost for going from n to n’ using action a.
-The adaptive A* leaves initially consistent h-values consistent because it changes consistent h-values into more informed consistent h-values. In states spaces, it can find the shortest path even if action cost can increase because consistent h-values remain consistent after action cost increases.
+The h-value calculates the sum of the distances of the tiles from their goal positions. Since the agent cannot move along diagonals, the distance is the sum of the horizontal and vertical distances. The formula that we used in our project to calculate Manhattan distance is Manhattan Distance = abs(Horizontal Distance) + abs(Vertical Distance). This is only consistent when agent is allowed to move only in the four main compass directions because if the agent can move diagonally, the shortest distance between two point A(a, b) and B(c, d) is $\sqrt{(c-a)^2+(d-b)^2}$ which would be smaller than the smallest distance calculated by Manhattan distance: ($  |(c-a)| + |(d - b)| $) which ruins consistency
 
-For Adaptive A*, the formula for h-value is f{\tiny (i)}(node) = g{\tiny (i-1)}(goal) - g{\tiny (i-1)}(node). The initial 
+From the lecture slides, the heuristic function is said to be consistent if
+        for all(n, a, n’) : h(n) $\leq$ c(n, a, n’) + h(n’)
+where c(n, a, n’) is the step cost for going from n to n’ using action a.
+
+For Adaptive A*, the formula for h-value is f{\tiny (i)}(node) = g{\tiny (i-1)}(goal) - g{\tiny (i-1)}(node). At the initial position, g{\tiny (i-1)}(goal) would be the length of the path traveling from the start state to the goal state. Because now it is the start state, the g(goal) is calculated by Manhattan distance in the previous (i-1)th iteration using RFA* and g(start) is just zero. Therefore, g{\tiny (i-1)}(goal) - g{\tiny (i-1)}(node) = g{\tiny (i-1)}(goal) - g(start) = g(goal). Because the Manhattan distance is always consistent, therefore the initial h-value is consistent. After the starting state, the action cost would increase (g{\tiny (i-1)}(goal) becomes larger) if the agent run into a block on it's path to the target. However, whenever this situation happens, g{\tiny (i-1)}(node) would also be increased because the particular g-value for that node is stored in the old closed list. Therefore, the adaptive A* leaves initially consistent h-values consistent because it changes consistent h-values into more informed consistent h-values. In states spaces, it can find the shortest path even if action cost can increase because consistent h-values remain consistent after action cost increases.
 
 \section*{Part 5}
 \hspace{5mm}
