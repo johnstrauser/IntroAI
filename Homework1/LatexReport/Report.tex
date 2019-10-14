@@ -83,10 +83,10 @@ However, if we put another block on (4, A), the agent would traverse from (2, E)
 
 \section*{Part 2}
 \hspace{5mm}
-We run Repeated Forward A* break ties in favor of cells with smaller g-values for 30 times in 30 different 101 * 101 mazes. The expanded cell (runtime) for each is 
+We run Repeated Forward A* we broke ties in favor of cells with smaller g-values for 30 times in 30 different 101 * 101 mazes. The expanded cell (runtime) for each is 
 (10159, 10, 25194, 24938, 11969, 6033, 5226, 17104, 14849, 528, 1300, 341, 3424, 1623, 19212, 7388, 5365, 40, 1248, 2744, 4735, 15193, 1233, 1274, 6011, 1296, 977, 9868, 3322, 774).
 
-Then we run Repeated Forward A* break ties in favor of cells with larger g-values for 30 times in 30 different 101 * 101 mazes. The expanded cell (runtime) for each is 
+Then we run Repeated Forward A* we broke ties in favor of cells with larger g-values for 30 times in 30 different 101 * 101 mazes. The expanded cell (runtime) for each is 
 (2619, 8, 1739, 2167, 2967, 410, 1105, 1236, 2448, 110, 243, 151, 1327, 630, 3278, 623, 2014, 29, 414, 548, 1520, 1633, 289, 386, 1417, 294, 762, 1287, 679, 241).
 
 The average for running RFA* in favor of smaller g-value 30 times is approximately 6605. And the average for running RFA* in favor of larger g-value 30 times is approximately 987 .
@@ -113,6 +113,8 @@ From the lecture slides, the heuristic function is said to be consistent if
         for all(n, a, n’) : h(n) <= c(n, a, n’) + h(n’)
 where c(n, a, n’) is the step cost for going from n to n’ using action a.
 The adaptive A* leaves initially consistent h-values consistent because it changes consistent h-values into more informed consistent h-values. In states spaces, it can find the shortest path even if action cost can increase because consistent h-values remain consistent after action cost increases.
+
+For Adaptive A*, the formula for h-value is f{\tiny (i)}(node) = g{\tiny (i-1)}(goal) - g{\tiny (i-1)}(node). The initial 
 
 \section*{Part 5}
 \hspace{5mm}
