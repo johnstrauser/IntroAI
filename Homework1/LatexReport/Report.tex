@@ -104,7 +104,7 @@ Then we run Repeated Backward A* in favor of cells with larger g-values for 30 t
 
 The average for running RFA* 30 times is approximately 987. And the average for running RBA* 30 times is approximately 4196.
 
-Through observation, we notice that RFA* is way faster than RBA*.  
+Through observation, we notice that RFA* is way faster than RBA*. The difference between RFA* and RBA* can be attributed to two factors. The first factor is the whether or not the random maze generation places the agent and target near a corner or outer wall. When an agent or target is placed near a corner or outer wall the algorithm has less nodes to expand behind the agent or target. For some reason our usage of python's random library led to the agent or target behind close to a corner or wall a majority of the time. The other factor is that the agent tended to be closer to larger blocks of randomly generated walls than the target. These larger blocks of walls caused a similar effect to being near a corner or outer wall, but could eventually get around that large wall once high enough F values were reached. All of this combined led us to the finding that when neither the agent or target was near a corner or outer wall we could expect RBA* to expand approximately 4-5 times more nodes than RFA*. That multiplier could change significantly in the event that either the agent or target was near a corner or outer wall.
 
 \section*{Part 4}
 \hspace{5mm}
