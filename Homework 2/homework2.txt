@@ -1,0 +1,16 @@
+Problem 1:
+Expansion sequence:
+(Lugoj,f=244,g=0,h=244)
+(Mehadia,f=311,g=70,h=241)
+(Drobeta,f=387,g=145,h=242)
+(Craiova,f=425,g=265,h=160)
+(Timisoara,f=440,g=111,h=329)
+(Pitesti,f=503,g=403,h=100)
+(Bucharest,f=504,g=504,h=0)
+
+Remaining open list after completion:
+(Riminuci Vilcea,f=604,g=411,h=193)
+(Arad,f=595,g=229,h=366)
+
+Expand Lugoj, adding Mehadia and Timisoara to open list. Expand Mehadia, adding Drobeta to open list. Expand Drobeta, adding Craiova to open list. Expand Craiova, adding Rimnicu Vilcea and Pitesti to open list. Expand Timisoara, adding Arad to open list. Expand Pitesti, adding Bucharest to open list. Bucharest is now the lowest F value so A* is complete.
+
