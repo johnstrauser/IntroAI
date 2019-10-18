@@ -71,3 +71,22 @@ State 5 expands to state 2, which has already been expanded so the search is com
 Branching factor for the downward search (starting at state 1) is 2.
 Branching factor for the upward search (starting at state 11) is 1.
 
+Problem 3
+a) True
+
+b) True
+
+c) True
+
+d) False
+
+e) True
+
+f) True
+
+g) True
+
+h) False
+
+i) True
+ 
