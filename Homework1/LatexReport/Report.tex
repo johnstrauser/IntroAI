@@ -130,8 +130,9 @@ Through observation, we notice that Adaptive A* is slower than RFA* in terms of 
 
 \section*{Part 6}
 \hspace{5mm}
-For further implementations, we can use breadth first search algorithm to reduce memory consumption. Since the tree-pointers can be implemented with two bits per cell, we can use little memory.  Rather than using multiple paths, we can do a local search at a current node. Since 1 byte = 8 bits, we can store 4 cells into 1 byte. If the gridworld is size of 1001 * 1001, it contains 1,002,001 cells. Divide 1,002,001 by 4 we get 250,500.25, which means we need 250,500.25 bytes. It is equivalent to 244.629 Kilobytes. If we can operate within memory limit of 4 Megabytes, 4 Megabytes is equivalent to 4194304 bytes. Since 4 cells can be stored in 1 byte, 4,194,304 * 4 = 16,777,216 cells. If we take the square root of 16,777,216, it is 4,096. It means we can operate 4,096 * 4,096 gridworld within memory limit of 4 Megabytes.
+To reduce memory consumption of our A* algorithm, we can use a sparse matrix. A sparse matrix representation can improve space complexity of the algorithm by removing redundant memory allocation.
 
+The tree-pointers can be implemented with two bits per cell. Since 1 byte = 8 bits, we can store 4 cells into 1 byte. If the gridworld is size of 1001 * 1001, it contains 1,002,001 cells. Divide 1,002,001 cells by 4 cells we get 250,500.25, which means we need 250,501 bytes to run this algorithm. If we can operate within memory limit of 4 Megabytes, 4 Megabytes is equivalent to 4194304 bytes. Since 4 cells can be stored in 1 byte, 4,194,304 * 4 = 16,777,216 cells. If we take the square root of 16,777,216, it is 4,096. It means we can operate 4,096 * 4,096 gridworld within memory limit of 4 Megabytes.
 
 
 \end{document}
