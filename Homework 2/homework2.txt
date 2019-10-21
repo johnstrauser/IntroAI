@@ -44,11 +44,14 @@ Wont expand 20 and 21 due to depth limit of 3
 State 11 is found and the search stops
 
 Iterative Deepening:
+
+REDO THIS
+
 State 1 expands to state 2 and 3
-limit is increased to 1
+limit is increased to 1, repeat state 1 expansion above
 State 2 expands to State 4 and 5
 State 3 expands to State 6 and 7
-limit is increased to 2
+limit is increased to 2, 
 State 4 expands to State 8 and 9
 State 5 expands to State 10 and 11
 State 6 expands to State 12 and 13
@@ -89,4 +92,16 @@ g) True
 h) False
 
 i) True
- 
+
+problem 4
+
+Advantage: Iterative Deepening requires less memory overall compared to BFS.
+Disadvantage: Becuase Iterative Deepening restarts the search each time the depth-limit is increased, the amount of nodes expanded is significantly higher.
+
+
+
+Problem 9
+
+done by wang in latex
+
+problem 10 done by wang in latex
