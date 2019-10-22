@@ -11,6 +11,41 @@
 
 \maketitle
 
+\section*{part 8}
+
+\hspace{5mm} 
+
+1) A heuristic function h is said to be admissible if for any state n, the heuristic value of the state h{\small (n)} is less or equal to the heuristic value of the goal state h{\small (g)}.
+
+a) Given the fact that both h{\small 1(n)} and h{\small 2(n)} are admissible, h{\small (n)} would be admissible because either h{\small 1(n)} or h{\small 2(n)} overestimate the cost to reach the h{\small (g)}. In this case, the smaller one of those two would still obtain a cost which smaller or equal to the real cost to reach the h{\small (g)} therefore admissible.
+
+b) We consider the given function at the boundary position:
+\begin{center}
+
+when w = 0, h{\small(n)} = h{\small 2(n)}
+
+when w = 1, h{\small(n)} = h{\small 1(n)}
+
+\end{center}
+
+Because of the fact that both h{\small 1(n)} and h{\small 2(n)} are admissible, we can see h{\small(n)} remains admissible for both boundaries.
+
+Furthermore, we want to prove that the given function remains admissible for any value within the interval 0 $<$ w $<$ 1. Again, because of the fact that both h{\small 1(n)} and h{\small 2(n)} are admissible, no matter which value in the interval is chosen,  h{\small (n)} would always obtain a value which smaller than either h{\small 1(n)} or h{\small 2(n)} which would not exceed the cost to reach h{\small (g)} therefore is admissible.
+
+c) Given the fact that both h{\small 1(n)} and h{\small 2(n)} are admissible, h{\small (n)} would be admissible because either h{\small 1(n)} or h{\small 2(n)} overestimate the cost to reach the h{\small (g)}. In this case, even if we want to choose the larger one, it would still obtain a cost which smaller or equal to the real cost to reach the h{\small (g)} therefore admissible.
+
+\vspace{5mm}
+
+2) A heuristic function h is said to be consistent if for any state n, the heuristic value of the state h{\small(n)} is less or equal than the cost c{\small(n')} to go to state n' starting from n plus the heuristic value of that state h{\small(n')}
+
+\begin{center}
+
+h{\small(n)} $\le$ c{\small(n')} + h{\small(n')}
+
+\end{center}
+
+There are plenty of explanations being done in part 1), therefore we are going to explain 2) in a simple way. Through observation in part 1), we can notice that none of three functions would return a value which make h{\small(n)} larger than either of h{\small1(n)} or h{\small2(n)}. Therefore, given the fact that both h{\small 1(n)} and h{\small 2(n)} satisfies the equation above, a value smaller or equal to h{\small 1(n)} or h{\small 2(n)} would still satisfies the equation above; therefore remain consistent.
+
 \section*{Part 9}
 
 \hspace{5mm} 
@@ -21,7 +56,11 @@ b) The hill-climbing part of simulated annealing is not necessary when the maxim
 
 c) Simulated annealing is useful when the local/global maximum of objective function is relatively sharp, the objective function has a lot local maximum with plateaux or shoulder situation.
 
-d)
+d) The simulated annealing would return a value which is or near the global maximum. Because of the fact that it does not often return the best solution, given that we know the value (measure of goodness) of each state we visit, we can compare the current state with it's neighbors and return the one which has the best measure of goodness.
+
+e) Since the formal simulated annealing only stores the current and the next state, there would be a lot redundancy work being done when running the algorithm. However, given that we have enough memory to hold more information, we can simply start from the beginning of the objective function, traverse and store each state's measure of goodness until the end of the objective function. Then, we just pick the one which has the best measurement of goodness as return value.
+
+f) The key of gradient ascent search is calculate the gradient of the objective function at current state and take step proportional to the gradient if it is positive. If the current state is at local maximum, all of it's neighbor would have a negative gradient and the agent would stuck.
 
 \section*{Part 10}
 
