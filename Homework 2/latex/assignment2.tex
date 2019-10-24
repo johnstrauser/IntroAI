@@ -11,6 +11,204 @@
 
 \maketitle
 
+\section*{p1}
+
+\hspace{5mm}
+
+Expansion sequence:
+
+(Lugoj,f=244,g=0,h=244)
+
+(Mehadia,f=311,g=70,h=241)
+
+(Drobeta,f=387,g=145,h=242)
+
+(Craiova,f=425,g=265,h=160)
+
+(Timisoara,f=440,g=111,h=329)
+
+(Pitesti,f=503,g=403,h=100)
+
+(Bucharest,f=504,g=504,h=0)
+
+\section*{p2}
+
+\hspace{5mm}
+
+A)
+
+BFS:
+
+State 1 expands to State 2 and 3
+
+State 2 expands to State 4 and 5
+
+State 3 expands to State 6 and 7
+
+State 4 expands to State 8 and 9
+
+State 5 expands to State 10 and 11
+
+State 6 expands to State 12 and 13
+
+State 7 expands to State 14 and 15
+
+State 8 expands to State 16 and 17
+
+State 9 expands to State 18 and 19
+
+State 10 expands to State 20 and 21
+
+State 11 is found and the search stops
+
+\hspace{5mm}
+
+Depth-Limited:
+
+State 1 expands to State 2 and 3
+
+State 2 expands to state 4 and 5
+
+State 4 expands to state 8 and 9
+
+State 8 expands to state 16 and 17
+
+Wont expand 16 and 17 due to depth limit of 3
+
+State 9 expands to state 18 and 19
+
+Wont expand 18 and 19 due to depth limit of 3
+
+State 5 expands to state 10 and 11
+
+State 10 expands to state 20 and 21
+
+Wont expand 20 and 21 due to depth limit of 3
+
+State 11 is found and the search stops
+
+\hspace{5mm}
+
+Iterative Deepening:
+
+limit starts at 0
+
+State 1 expands to state 2 and 3
+\newline
+
+limit is increased to 1
+
+State 1 expands to state 2 and 3
+
+State 2 expands to State 4 and 5
+
+State 3 expands to State 6 and 7
+\newline
+
+limit is increased to 2
+
+State 1 expands to state 2 and 3
+
+State 2 expands to State 4 and 5
+
+State 4 expands to State 8 and 9
+
+State 5 expands to State 10 and 11
+
+State 3 expands to State 6 and 7
+
+State 6 expands to State 12 and 13
+
+State 7 expands to State 14 and 15
+\newline
+
+limit is increased to 3
+
+State 1 expands to state 2 and 3
+
+State 2 expands to State 4 and 5
+
+State 4 expands to State 8 and 9
+
+State 8 expands to State 16 and 17
+
+State 9 expands to State 18 and 19
+
+State 5 expands to State 10 and 11
+
+State 10 expands to State 20 and 21
+
+State 11 is found and the search stops
+
+\hspace{5mm}
+
+B)
+
+Bidirectional sort should be optimal for this problem since all edges have the same undefined cost.
+\newline
+
+Order:
+
+State 1 expands to state 2 and 3
+
+State 11 expands to state 5
+
+State 2 expands to state 4 and 5
+
+State 5 expands to state 2, which has already been expanded so the search is complete
+\newline
+
+
+Branching factor for the downward search (starting at state 1) is 2.
+
+Branching factor for the upward search (starting at state 11) is 1.
+
+\section*{p3}
+
+\hspace{5mm}
+
+a) True
+
+
+
+b) True
+
+
+
+c) True
+
+
+
+d) False
+
+
+e) True
+
+
+
+f) True
+
+
+
+g) True
+
+
+
+
+h) False
+
+
+
+i) True
+
+\section*{p4}
+
+\hspace{5mm}
+
+Advantage: Iterative Deepening requires less memory overall compared to BFS.
+
+Disadvantage: Becuase Iterative Deepening restarts the search each time the depth-limit is increased, the amount of nodes expanded is significantly higher.
+
 \section*{part 8}
 
 \hspace{5mm} 
