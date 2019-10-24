@@ -44,70 +44,128 @@ Wont expand 20 and 21 due to depth limit of 3
 State 11 is found and the search stops
 
 Iterative Deepening:
+
 limit starts at 0
+
 State 1 expands to state 2 and 3
+
 
 limit is increased to 1
+
 State 1 expands to state 2 and 3
+
 State 2 expands to State 4 and 5
+
 State 3 expands to State 6 and 7
+
 
 limit is increased to 2
+
 State 1 expands to state 2 and 3
+
 State 2 expands to State 4 and 5
+
 State 4 expands to State 8 and 9
+
 State 5 expands to State 10 and 11
+
 State 3 expands to State 6 and 7
+
 State 6 expands to State 12 and 13
+
 State 7 expands to State 14 and 15
 
+
 limit is increased to 3
+
 State 1 expands to state 2 and 3
+
 State 2 expands to State 4 and 5
+
 State 4 expands to State 8 and 9
+
 State 8 expands to State 16 and 17
+
 State 9 expands to State 18 and 19
+
 State 5 expands to State 10 and 11
+
 State 10 expands to State 20 and 21
+
 State 11 is found and the search stops
 
 
 
+
 B)
+
 Bidirectional sort should be optimal for this problem since all edges have the same undefined cost.
 
+
 Order:
+
 State 1 expands to state 2 and 3
+
 State 11 expands to state 5
+
 State 2 expands to state 4 and 5
+
 State 5 expands to state 2, which has already been expanded so the search is complete
 
+
+
 Branching factor for the downward search (starting at state 1) is 2.
+
 Branching factor for the upward search (starting at state 11) is 1.
 
+
 Problem 3
+
 a) True
+
+
 
 b) True
 
+
+
 c) True
+
+
 
 d) False
 
+
 e) True
+
+
 
 f) True
 
+
+
 g) True
+
+
+
 
 h) False
 
+
+
 i) True
+
+
 
 problem 4
 
+
+
 Advantage: Iterative Deepening requires less memory overall compared to BFS.
+
 Disadvantage: Becuase Iterative Deepening restarts the search each time the depth-limit is increased, the amount of nodes expanded is significantly higher.
+
+
 
 
 
