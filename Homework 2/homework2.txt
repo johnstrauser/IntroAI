@@ -44,23 +44,34 @@ Wont expand 20 and 21 due to depth limit of 3
 State 11 is found and the search stops
 
 Iterative Deepening:
-
-REDO THIS
-
+limit starts at 0
 State 1 expands to state 2 and 3
-limit is increased to 1, repeat state 1 expansion above
+
+limit is increased to 1
+State 1 expands to state 2 and 3
 State 2 expands to State 4 and 5
 State 3 expands to State 6 and 7
-limit is increased to 2, 
+
+limit is increased to 2
+State 1 expands to state 2 and 3
+State 2 expands to State 4 and 5
 State 4 expands to State 8 and 9
 State 5 expands to State 10 and 11
+State 3 expands to State 6 and 7
 State 6 expands to State 12 and 13
 State 7 expands to State 14 and 15
+
 limit is increased to 3
+State 1 expands to state 2 and 3
+State 2 expands to State 4 and 5
+State 4 expands to State 8 and 9
 State 8 expands to State 16 and 17
 State 9 expands to State 18 and 19
+State 5 expands to State 10 and 11
 State 10 expands to State 20 and 21
 State 11 is found and the search stops
+
+
 
 B)
 Bidirectional sort should be optimal for this problem since all edges have the same undefined cost.
