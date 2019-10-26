@@ -17,19 +17,39 @@
 
 Expansion sequence:
 
-(Lugoj,f=244,g=0,h=244)
+Start
 
-(Mehadia,f=311,g=70,h=241)
+(Lugoj, f=244, g=0, h=244)
 
-(Drobeta,f=387,g=145,h=242)
+Expand Lugoj:
 
-(Craiova,f=425,g=265,h=160)
+(Mehadia, f=311, g=70, h=241)
 
-(Timisoara,f=440,g=111,h=329)
+(Timisoara, f=440, g=111, h=329)
 
-(Pitesti,f=503,g=403,h=100)
+Expand Mehadia
 
-(Bucharest,f=504,g=504,h=0)
+(Drobeta, f=387, g=145, h=242)
+
+Expand Drobeta
+
+(Craiova, f=425, g=265, h=160)
+
+Expand Craiova
+
+(Pitesti, f=503, g=403, h=100)
+
+(Rimnicu Vilcea, f=604, g=411, h=193)
+
+Expand Timisoara (440 < 503 < 604)
+
+(Arad, f=565, g=229, h=336)
+
+Expand Pitesti (503 < 565 < 604)
+
+(Bucharest, f=504, g=504, h=0) 
+
+We can stop here because f(Bucharest) $<$ f(Arad) $<$ f(Rimnicu Vilcea)
 
 \section*{p2}
 
@@ -169,35 +189,19 @@ Branching factor for the upward search (starting at state 11) is 1.
 
 a) True
 
-
-
 b) True
-
-
 
 c) True
 
-
-
 d) False
-
 
 e) True
 
-
-
 f) True
-
-
 
 g) True
 
-
-
-
 h) False
-
-
 
 i) True
 
