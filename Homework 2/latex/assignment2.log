@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.2)  27 OCT 2019 14:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.2)  27 OCT 2019 15:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -581,7 +581,7 @@ Package pdftex.def Info: P7.png  used on input line 244.
 Here is how much of TeX's memory you used:
  12838 strings out of 492616
  259957 string characters out of 6129481
- 305246 words of memory out of 5000000
+ 305265 words of memory out of 5000000
  16502 multiletter control sequences out of 15000+600000
  7579 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -594,7 +594,7 @@ t/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on assignment2.pdf (8 pages, 188894 bytes).
+Output written on assignment2.pdf (8 pages, 188906 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  45 compressed objects within 1 object stream
