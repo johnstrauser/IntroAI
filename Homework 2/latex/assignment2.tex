@@ -2,6 +2,7 @@
 
 \usepackage{tikz-qtree}
 \usepackage{tikz}
+\usepackage{pdfpages}
 
 \author{Yeoun Chan Kim \and John Strauser \and Xuanang Wang}
 
@@ -212,6 +213,39 @@ i) True
 Advantage: Iterative Deepening requires less memory overall compared to BFS.
 
 Disadvantage: Becuase Iterative Deepening restarts the search each time the depth-limit is increased, the amount of nodes expanded is significantly higher.
+
+\section*{P5}
+
+\hspace{5mm}
+
+A heuristic h(n) is consistent if it satisfies h(n) $\le$ c(n, a, n’) + h(n’) where c(n, a, n’) is the step cost for going from n to n’ using action a. Let k to be the number of nodes on the shortest path to n’ from n, and h*(n) be the true cost from n to n’.
+
+Base Case: when k = 1, h(n) $\le$ c(n, a, n’) + h(n’) = c(n, a, n’) = h*(n)
+
+Inductive Hypothesis: Assume h(n’) is admissible when k = i
+
+Inductive Step: h(n) $\le$ c(n, a, n’) + h(n’) = c(n, a, n’) + h*(n’) = h*(n) since h(n) $\le$ h*(n). Since h(n) $\le$ h*(n), h(n) is admissible when k = i+1
+
+It is proved by induction that when a heuristic is consistent, it must be admissible.
+
+However, an admissible heuristic is not always consistent.
+For a heuristic to be admissible it must satisfy h(n) $\le$ h*(n). If there is a triangle with three nodes s (start state), x, g (goal state). Let s to x takes 2 cost, and x to g takes 4 costs. then h(s) $\le$ 6, h(x) $\le$ 4, h(g) $\le$ 0. If this case is consistent, h(s) $\le$ 2 + h(x) and h(x) $\le$ 4 + h(g). A heuristic that satisfies h(s) $>$ 2 + h(x) and h(x) $\le$ 4 is inconsistent. If h(x) = 2, it is admissible but not consistent.
+
+\section*{P6}
+
+\hspace{5mm}
+
+In a CSP search, it is a good heuristic to choose the variable that is most constrained because it has the highest chance of causing a failure and it is more efficient to fail as early as possible. If we choose the least constrained value, it has the lowest chance of causing a failure and there will be more assignments taking place.
+
+\section*{P7}
+
+\hspace{5mm}
+
+\includepdf[pages=-]{P7.png}
+
+\hspace{5mm}
+
+The search prunes the remaining branches at a node as soon as the value of the current node is worse than current $\alpha$ or $\beta$ value for MAX or MIN. Left to right ordering is different from right to left ordering because the search prunes remaining branched as somm as it meets the condition.
 
 \section*{P8}
 
