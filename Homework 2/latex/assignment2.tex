@@ -11,7 +11,7 @@
 
 \maketitle
 
-\section*{p1}
+\section*{P1}
 
 \hspace{5mm}
 
@@ -51,7 +51,7 @@ Expand Pitesti (503 < 565 < 604)
 
 We can stop here because f(Bucharest) $<$ f(Arad) $<$ f(Rimnicu Vilcea)
 
-\section*{p2}
+\section*{P2}
 
 \hspace{5mm}
 
@@ -183,7 +183,7 @@ Branching factor for the downward search (starting at state 1) is 2.
 
 Branching factor for the upward search (starting at state 11) is 1.
 
-\section*{p3}
+\section*{P3}
 
 \hspace{5mm}
 
@@ -205,7 +205,7 @@ h) False
 
 i) True
 
-\section*{p4}
+\section*{P4}
 
 \hspace{5mm}
 
@@ -213,7 +213,7 @@ Advantage: Iterative Deepening requires less memory overall compared to BFS.
 
 Disadvantage: Becuase Iterative Deepening restarts the search each time the depth-limit is increased, the amount of nodes expanded is significantly higher.
 
-\section*{part 8}
+\section*{P8}
 
 \hspace{5mm} 
 
@@ -248,7 +248,7 @@ h{\small(n)} $\le$ c{\small(n')} + h{\small(n')}
 
 There are plenty of explanations being done in part 1), therefore we are going to explain 2) in a simple way. Through observation in part 1), we can notice that none of three functions would return a value which make h{\small(n)} larger than either of h{\small1(n)} or h{\small2(n)}. Therefore, given the fact that both h{\small 1(n)} and h{\small 2(n)} satisfies the equation above, a value smaller or equal to h{\small 1(n)} or h{\small 2(n)} would still satisfies the equation above; therefore remain consistent.
 
-\section*{Part 9}
+\section*{P9}
 
 \hspace{5mm} 
 
@@ -262,9 +262,9 @@ d) The simulated annealing would return a value which is or near the global maxi
 
 e) Since the formal simulated annealing only stores the current and the next state, there would be a lot redundancy work being done when running the algorithm. However, given that we have enough memory to hold more information, we can simply start from the beginning of the objective function, traverse and store each state's measure of goodness until the end of the objective function. Then, we just pick the one which has the best measurement of goodness as return value.
 
-f) The key of gradient ascent search is calculate the gradient of the objective function at current state and take step proportional to the gradient if it is positive. If the current state is at local maximum, all of it's neighbor would have a negative gradient and the agent would stuck.
+f) The key of gradient ascent search is calculate the gradient of the objective function at current state and take step proportional to the gradient if it is positive. If the current state is at local maximum, all of it's neighbor would have a negative gradient therefore the agent would stuck. Because of the fact that the method of hill climbing is similar to gradient ascent search, we may just replace the role that is done by hill climbing in simulated annealing using gradient ascent search in order to avoid being stuck.
 
-\section*{Part 10}
+\section*{P10}
 
 For the following tree, each state have a format of K(P1, P2)(C) where K represents which player's move, P1 represents the current token position for player A, P2 represents the current token position for player B, C represents the minmax value of the state. Note: the end state has no K.
 
