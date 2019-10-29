@@ -218,15 +218,34 @@ Disadvantage: Becuase Iterative Deepening restarts the search each time the dept
 
 \hspace{5mm}
 
-A heuristic h(n) is consistent if it satisfies h(n) $\le$ c(n, a, n’) + h(n’) where c(n, a, n’) is the step cost for going from n to n’ using action a. Let k to be the number of nodes on the shortest path to n’ from n, and h*(n) be the true cost from n to n’.
+A heuristic h(n) is consistent if it satisfies h(n) $\le$ c(n, a, n’) + h(n’) where c(n, a, n’) is the step cost for going from n to n’ using action a.
 
-Base Case: when k = 1, h(n) $\le$ c(n, a, n’) + h(n’) = c(n, a, n’) = h*(n)
+A heuristic h(n) is admissible if it satisfies h(n) $\le$ h*(n) where h*(n) is the true cost from state n to the goal state.
 
-Inductive Hypothesis: Assume h(n’) is admissible when k = i
+Let’s say h(n1) and h(n2) are connected and h(n1) satisfies the condition of consistency. Which means
+\begin{center}
 
-Inductive Step: h(n) $\le$ c(n, a, n’) + h(n’) = c(n, a, n’) + h*(n’) = h*(n) since h(n) $\le$ h*(n). Since h(n) $\le$ h*(n), h(n) is admissible when k = i+1
+	h(n1) $\le$ c(n1, a, n2) + h(n2). 
 
-It is proved by induction that when a heuristic is consistent, it must be admissible.
+\end{center}
+And this situation would be plausible only if 
+\begin{center}
+
+	h(n1) $\le$ h*(n1).
+	
+\end{center}
+For example, if the goal state is n2, the equation of consistency becomes to 
+\begin{center}
+
+	h(n1) $\le$ c(n1, a, n2) + 0
+	
+	which equivalents to 
+	
+	h(n1) $\le$ c(n1, a, n2)
+
+\end{center}
+In this situation, c(n1, a, n2) is equivalent to h*(n1). If h(n1) $>$ h*(n1), which is the negation of the equation of admissible, the equation of consistency would no longer hold.
+
 
 However, an admissible heuristic is not always consistent.
 For a heuristic to be admissible it must satisfy h(n) $\le$ h*(n). If there is a triangle with three nodes s (start state), x, g (goal state). Let s to x takes 2 cost, and x to g takes 4 costs. then h(s) $\le$ 6, h(x) $\le$ 4, h(g) $\le$ 0. If this case is consistent, h(s) $\le$ 2 + h(x) and h(x) $\le$ 4 + h(g). A heuristic that satisfies h(s) $>$ 2 + h(x) and h(x) $\le$ 4 is inconsistent. If h(x) = 2, it is admissible but not consistent.
@@ -245,7 +264,7 @@ In a CSP search, it is a good heuristic to choose the variable that is most cons
 
 \hspace{5mm}
 
-The search prunes the remaining branches at a node as soon as the value of the current node is worse than current $\alpha$ or $\beta$ value for MAX or MIN. Left to right ordering is different from right to left ordering because the search prunes remaining branched as somm as it meets the condition.
+The search prunes the remaining branches at a node as soon as the value of the current node is worse than current $\alpha$ or $\beta$ value for MAX or MIN. Left to right ordering is different from right to left ordering because the search prunes remaining branched as soon as it meets the condition.
 
 \section*{P8}
 
@@ -294,7 +313,13 @@ c) Simulated annealing is useful when the local/global maximum of objective func
 
 d) The simulated annealing would return a value which is or near the global maximum. Because of the fact that it does not often return the best solution, given that we know the value (measure of goodness) of each state we visit, we can compare the current state with it's neighbors and return the one which has the best measure of goodness.
 
-e) Since the formal simulated annealing only stores the current and the next state, there would be a lot redundancy work being done when running the algorithm. However, given that we have enough memory to hold more information, we can simply start from the beginning of the objective function, traverse and store each state's measure of goodness until the end of the objective function. Then, we just pick the one which has the best measurement of goodness as return value.
+e) Method 1: brutal force without using simulated annealing
+
+Since the formal simulated annealing only stores the current and the next state, there would be a lot redundancy work being done when running the algorithm. However, given that we have enough memory to hold more information, we can simply start from the beginning of the objective function, traverse and store each state's measure of goodness until the end of the objective function. Then, we just pick the one which has the best measurement of goodness as return value.
+
+Method 2: similar idea as part 1 but using simulated annealing
+
+Given the fact that we have plenty of memory to use, for each state we have not visited yet using simulated annealing, we would record it's measure of goodness and mark it as visited (The visualization would be a line(curve) starting at the starting state and spread according to the shape of the objective function in both directions. The line(curve) represents the state we already visited). We stop going to a direction when this side of the objective function reaches the end. When both directions reach the end of the objection function, we return the state which holds the highest measure of goodness.
 
 f) The key of gradient ascent search is calculate the gradient of the objective function at current state and take step proportional to the gradient if it is positive. If the current state is at local maximum, all of it's neighbor would have a negative gradient therefore the agent would stuck. Because of the fact that the method of hill climbing is similar to gradient ascent search, we may just replace the role that is done by hill climbing in simulated annealing using gradient ascent search in order to avoid being stuck.
 
