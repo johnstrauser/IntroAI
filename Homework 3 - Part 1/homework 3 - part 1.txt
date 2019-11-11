@@ -1,0 +1,37 @@
+Problem 1
+
+A) 	All five True = P(A,B,C,D,E) = P(A)P(B)P(C)P(D|A+B)P(E|B+C)
+	P(A) = 0.2
+	P(B) = 0.5
+	P(C) = 0.8
+	P(D|A+B) = 0.1
+	P(E|B+C) = 0.3
+	P(A,B,C,D,E) = 0.2*0.5*0.8*0.1*0.3 = 0.0024
+
+B)	All five false = P(-A,-B,-C,-D,-E) = P(-A)P(-B)P(-C)P(-D|-A+-B)P(-E|-B+-C)
+	P(-A) = 0.8
+	P(-B) = 0.5
+	P(-C) = 0.2
+	P(-D|-A+-B) = 0.1
+	P(-E|-B+-C) = 0.8
+	P(-A,-B,-C,-D,-E) = 0.8*0.5*0.2*0.1*0.8 = 0.0064
+
+C)	P(-A|B+C+D+E) = P(-A+B+C+D+E) / P(B+C+D+E)
+	P(-A+B+C+D+E) = P(-A)P(B)P(C)P(D|-A+B)P(E|B+C) = 0.8*0.5*0.8*0.6*0.3 = 0.0576
+	P(B+C+D+E) = P(B)P(C)P(D|B)P(E|B+C) = 0.5*0.8*0.7*0.3 = 0.084
+	P(-A|B+C+D+E) = 0.0576 / 0.084 = 0.6857
+	
+Problem 2
+
+A) 	P(Burglary|JohnCalls + MaryCalls) = P(B,J,M,A,E) + P(B,J,M,A,-E) + P(B,J,M,-A,E) + P(B,J,M,-A,-E) / P(B,J,M) + P(-B,J,M)
+	P(B,J,M,A,E) = P(B)P(J|A)P(M|A)P(A|B+E)P(E) = 0.001*0.9*0.7*0.95*0.002 = 0.000001197
+	P(B,J,M,A,-E) = P(B)P(J|A)P(M|A)P(A|B+-E)P(-E) = 0.001*0.9*0.7*0.94*0.998 = 0.000591
+	P(B,J,M,-A,E) = P(B)P(J|-A)P(M|-A)P(-A|B+E)P(E) = 0.001*0.05*0.01*0.05*0.002 = 0.000000000005
+	P(B,J,M,-A,-E) = P(B)P(J|-A)P(M|-A)P(-A|B+-E)P(-E) = 0.001*0.05*0.01*0.06*0.998 = 0.0000000299
+	P(B,J,M) = P(B)(P(J|A)+P(J|-A))(P(M|A)+P(M|-A)) = 0.001*(0.9+0.05)*(0.7+0.01) = 0.0006745
+	P(-B,J,M) = P(-B)(P(J|A)+P(J|-A))(P(M|A)+P(M|-A)) = 0.999*(0.9+0.05)*(0.7+0.01) = 0.674
+	P(Burglary|JohnCalls + MaryCalls) = (0.000001197 + 0.000591 + 0.000000000005 + 0.0000000299)/(0.0006745 + 0.674) = 0.001
+	
+B)	enumeration tree would be a straight line. Therefore worst case is that all n variables must be checked. 
+	complexity using enumeration = O(n)
+	complexity using variable elimination = O(n)
