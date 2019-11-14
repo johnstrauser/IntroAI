@@ -35,3 +35,53 @@ A) 	P(Burglary|JohnCalls + MaryCalls) = P(B,J,M,A,E) + P(B,J,M,A,-E) + P(B,J,M,-
 B)	enumeration tree would be a straight line. Therefore worst case is that all n variables must be checked. 
 	complexity using enumeration = O(n)
 	complexity using variable elimination = O(n)
+	
+Problem 3
+
+A)
+
+OC : card holder owns a computer or smart phone.
+Fraud : current transaction is fraudulent.
+Trav : card holder is currently travelling.
+FP : current transaction is a foreign purchase.
+IP : current purchase is an internet purchase.
+CRP : a computer related purchase was made in the past week
+
+Trav | P(Fraud)
+True	0.01
+False	0.004
+
+P(Trav) = 0.05
+
+Trav 	Fraud |	P(FP)
+True	True	0.9
+True	False	0.9
+False	True	0.1
+False	False	0.01
+
+P(OC) = 0.75
+
+OC		Fraud |	P(IP)
+True	True	0.01
+True	False	0.02
+False	True	0.001
+False	False	0.011
+
+OC 	| 	P(CRP)
+True	0.1
+False	0.001
+
+B)
+	P(Fraud) = (P(Fraud + Trav) + P(Fraud + !Trav)) / (P(Fraud) + P(-Fraud))
+	P(Fraud) = (P(Fraud|Trav)P(Trav) + P(Fraud|!Trav)P(!Trav)) / (1)
+	P(Fraud) = 0.01*0.05 + 0.004*0.95
+	P(Fraud) = 0.0043
+	
+	P(Fraud | FP + -IP + CRP) = (P(Fraud + FP + -IP + CRP + Trav + OC) + P(Fraud + FP + -IP + CRP + Trav + !OC) + P(Fraud + FP + -IP + CRP + !Trav + OC) + P(Fraud + FP + -IP + CRP + !Trav + !OC))/(P(Fraud + FP + -IP + CRP) + P(-Fraud + FP + -IP + CRP + Trav + OC))
+	P(Fraud + FP + -IP + CRP + Trav + OC) = P(Fraud|Trav)P(FP|Trav+Fraud)P(-IP|OC+Fraud)P(CRP|OC)P(Trav)P(OC) = 0.01 * 0.9 * 0.99 * 0.1 * 0.05 * 0.75 = 0.0000334125
+	P(Fraud + FP + -IP + CRP + Trav + !OC) = P(Fraud|Trav)P(FP|Trav+Fraud)P(-IP|-OC+Fraud)P(CRP|-OC)P(Trav)P(-OC) = 0.01 * 0.9 * 0.999 * 0.001 * 0.05 * 0.25 = 0.0000001124
+	P(Fraud + FP + -IP + CRP + !Trav + OC) = P(Fraud|-Trav)P(FP|-Trav+Fraud)P(-IP|OC+Fraud)P(CRP|OC)P(-Trav)P(OC) = 0.004 * 0.1 * 0.99 * 0.1 * 0.95 * 0.75 = 0.000028215
+	P(Fraud + FP + -IP + CRP + !Trav + !OC) = P(Fraud|-Trav)P(FP|-Trav+Fraud)P(-IP|-OC+Fraud)P(CRP|-OC)P(-Trav)P(-OC) = 0.004 * 0.1 * 0.999 * 0.001 * 0.95 * 0.25 = 0.0000000949
+	P(Fraud + FP + -IP + CRP) = (P(Fraud|Trav)+P(Fraud|-Trav))(P(FP|Trav+Fraud)+P(FP|-Trav+Fraud))(P(-IP|OC+Fraud)+P(-IP|-OC+Fraud))(P(CRP|-OC)+P(CRP|OC)) = (0.01+0.004)(0.9+0.1)(0.99+0.999)(0.1+0.001) = 0.014 * 1 * 1.989 * 0.101 = 0.002812446
+	P(-Fraud + FP + -IP + CRP) = (P(-Fraud|Trav)+P(-Fraud|-Trav))(P(FP|Trav+-Fraud)+P(FP|-Trav+-Fraud))(P(-IP|OC+-Fraud)+P(-IP|-OC+-Fraud))(P(CRP|-OC)+P(CRP|OC)) = (0.99+0.996)(0.9+0.01)(0.98+0.989)(0.1+0.001) = 1.986 * 0.91 * 1.969 * 0.101 = 0.3594079889
+	P(Fraud | FP + -IP + CRP) = (0.0000334125 + 0.0000001124 + 0.000028215 + 0.0000000949)/(0.002812446 + 0.3594079889) = 0.00017
