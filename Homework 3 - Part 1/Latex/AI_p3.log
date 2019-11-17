@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.2)  17 NOV 2019 18:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.2)  17 NOV 2019 18:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -98,8 +98,8 @@ $\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A))(P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10
  []
 
 
-Overfull \hbox (54.02658pt too wide) in paragraph at lines 81--82
-[]\OT1/cmr/m/n/10 P(-B,J,M) = P(-B)(P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)+P
+Overfull \hbox (52.9155pt too wide) in paragraph at lines 81--82
+[]\OT1/cmr/m/n/10 P(!B,J,M) = P(!B)(P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)+P
 (J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A))(P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/
 10 A)+P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A)) = 0.999*(0.9+0.05)*(0.7+0.01)
 
