@@ -1,0 +1,191 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.10.2)  17 NOV 2019 18:09
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**AI_p3.tex
+(./AI_p3.tex
+LaTeX2e <2018-12-01>
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (./AI_p3.aux)
+\openout1 = `AI_p3.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 18.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 18.
+
+Overfull \hbox (6.16635pt too wide) in paragraph at lines 36--37
+[]\OT1/cmr/m/n/10 All five false = P(!A,!B,!C,!D,!E) = P(!A)P(!B)P(!C)P(!D$\OMS
+/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A+!B)P(!E$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !B
++!C) 
+ []
+
+
+Overfull \hbox (27.7765pt too wide) in paragraph at lines 56--57
+[]\OT1/cmr/m/n/10 P(!A+B+C+D+E) = P(!A)P(B)P(C)P(D$\OMS/cmsy/m/n/10 j$\OT1/cmr/
+m/n/10 !A+B)P(E$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 B+C) = 0.8*0.5*0.8*0.6*0.3
+ []
+
+
+Overfull \hbox (18.33206pt too wide) in paragraph at lines 71--72
+[]\OT1/cmr/m/n/10 P(B,J,M,A,E) = P(B)P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)P
+(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)P(A$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 
+B+E)P(E) = 0.001*0.9*0.7*0.95*0.002
+ []
+
+[1
+
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (26.66542pt too wide) in paragraph at lines 73--74
+[]\OT1/cmr/m/n/10 P(B,J,M,A,!E) = P(B)P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)
+P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)P(A$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10
+ B+!E)P(!E) = 0.001*0.9*0.7*0.94*0.998
+ []
+
+
+Overfull \hbox (39.99878pt too wide) in paragraph at lines 75--76
+[]\OT1/cmr/m/n/10 P(B,J,M,!A,E) = P(B)P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A
+)P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A)P(-A$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n
+/10 B+E)P(E) = 0.001*0.05*0.01*0.05*0.002
+ []
+
+
+Overfull \hbox (47.7766pt too wide) in paragraph at lines 77--78
+[]\OT1/cmr/m/n/10 P(B,J,M,!A,!E) = P(B)P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !
+A)P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A)P(!A$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/
+n/10 B+!E)P(!E) = 0.001*0.05*0.01*0.06*0.998
+ []
+
+
+Overfull \hbox (47.35992pt too wide) in paragraph at lines 79--80
+[]\OT1/cmr/m/n/10 P(B,J,M) = P(B)(P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)+P(J
+$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A))(P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10
+ A)+P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A)) = 0.001*(0.9+0.05)*(0.7+0.01)
+ []
+
+
+Overfull \hbox (54.02658pt too wide) in paragraph at lines 81--82
+[]\OT1/cmr/m/n/10 P(-B,J,M) = P(-B)(P(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 A)+P
+(J$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A))(P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/
+10 A)+P(M$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !A)) = 0.999*(0.9+0.05)*(0.7+0.01)
+
+ []
+
+
+Overfull \hbox (25.05644pt too wide) in paragraph at lines 83--84
+[]\OT1/cmr/m/n/10 P(Burglary$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 JohnCalls + Mar
+yCalls) = (0.000001197 + 0.000591 + 0.000000000005
+ []
+
+[2]
+Overfull \hbox (3.80626pt too wide) in paragraph at lines 164--165
+[]\OT1/cmr/m/n/10 P(Fraud) = (P(Fraud + Trav) + P(Fraud + !Trav)) / (P(Fraud) +
+ P(!Fraud)) 
+ []
+
+
+Overfull \hbox (212.0245pt too wide) in paragraph at lines 174--175
+[]\OT1/cmr/m/n/10 P(Fraud + FP + !IP + CRP + Trav + OC) = P(Fraud$\OMS/cmsy/m/n
+/10 j$\OT1/cmr/m/n/10 Trav)P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 Trav+Fraud)P
+(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC+Fraud)P(CRP$\OMS/cmsy/m/n/10 j$\OT1/
+cmr/m/n/10 OC)P(Trav)P(OC)
+ []
+
+
+Overfull \hbox (47.52412pt too wide) in paragraph at lines 176--177
+[]\OT1/cmr/m/n/10 P(Fraud + FP + !IP + CRP + Trav + !OC) = P(Fraud$\OMS/cmsy/m/
+n/10 j$\OT1/cmr/m/n/10 Trav)P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 Trav+Fraud)
+P(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 -
+ []
+
+
+Overfull \hbox (223.13565pt too wide) in paragraph at lines 178--179
+[]\OT1/cmr/m/n/10 P(Fraud + FP + !IP + CRP + !Trav + OC) = P(Fraud$\OMS/cmsy/m/
+n/10 j$\OT1/cmr/m/n/10 !Trav)P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !Trav+Frau
+d)P(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC+Fraud)P(CRP$\OMS/cmsy/m/n/10 j$\O
+T1/cmr/m/n/10 OC)P(!Trav)P(OC)
+ []
+
+
+Overfull \hbox (55.85748pt too wide) in paragraph at lines 180--181
+[]\OT1/cmr/m/n/10 P(Fraud + FP + !IP + CRP + !Trav + !OC) = P(Fraud$\OMS/cmsy/m
+/n/10 j$\OT1/cmr/m/n/10 !Trav)P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !Trav+Fra
+ud)P(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 -
+ []
+
+
+Overfull \hbox (441.83183pt too wide) in paragraph at lines 182--183
+[]\OT1/cmr/m/n/10 P(Fraud + FP + !IP + CRP) = (P(Fraud$\OMS/cmsy/m/n/10 j$\OT1/
+cmr/m/n/10 Trav)+P(Fraud$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !Trav))(P(FP$\OMS/c
+msy/m/n/10 j$\OT1/cmr/m/n/10 Trav+Fraud)+P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/1
+0 !Trav+Fraud))(P(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC+Fraud)+P(!IP$\OMS/c
+msy/m/n/10 j$\OT1/cmr/m/n/10 !OC+Fraud))(P(CRP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/
+10 !OC)+P(CRP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC))
+ []
+
+
+Overfull \hbox (461.27634pt too wide) in paragraph at lines 184--185
+[]\OT1/cmr/m/n/10 P(!Fraud + FP + !IP + CRP) = (P(!Fraud$\OMS/cmsy/m/n/10 j$\OT
+1/cmr/m/n/10 Trav)+P(!Fraud$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !Trav))(P(FP$\OM
+S/cmsy/m/n/10 j$\OT1/cmr/m/n/10 Trav+!Fraud)+P(FP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m
+/n/10 !Trav+!Fraud))(P(!IP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC+!Fraud)+P(!IP$
+\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 !OC+!Fraud))(P(CRP$\OMS/cmsy/m/n/10 j$\OT1/c
+mr/m/n/10 !OC)+P(CRP$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/10 OC))
+ []
+
+[3] (./AI_p3.aux) ) 
+Here is how much of TeX's memory you used:
+ 228 strings out of 492616
+ 2447 string characters out of 6129481
+ 63762 words of memory out of 5000000
+ 4224 multiletter control sequences out of 15000+600000
+ 7280 words of font info for 26 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,6n,17p,280b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb>
+Output written on AI_p3.pdf (3 pages, 61880 bytes).
+PDF statistics:
+ 34 PDF objects out of 1000 (max. 8388607)
+ 23 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
