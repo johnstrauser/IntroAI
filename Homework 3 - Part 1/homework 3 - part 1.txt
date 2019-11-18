@@ -18,8 +18,8 @@ B)	All five false = P(-A,-B,-C,-D,-E) = P(-A)P(-B)P(-C)P(-D|-A+-B)P(-E|-B+-C)
 
 C)	P(-A|B+C+D+E) = P(-A+B+C+D+E) / P(B+C+D+E)
 	P(-A+B+C+D+E) = P(-A)P(B)P(C)P(D|-A+B)P(E|B+C) = 0.8*0.5*0.8*0.6*0.3 = 0.0576
-	P(B+C+D+E) = P(B)P(C)P(D|B)P(E|B+C) = 0.5*0.8*0.7*0.3 = 0.084
-	P(-A|B+C+D+E) = 0.0576 / 0.084 = 0.6857
+	P(B+C+D+E) = P(A,B,C,D,E) + P(-A,B,C,D,E) = 0.0024 + 0.0576 = 0.06	
+	P(-A|B+C+D+E) = 0.0576 / 0.06 = 0.96
 	
 Problem 2
 
@@ -28,9 +28,14 @@ A) 	P(Burglary|JohnCalls + MaryCalls) = P(B,J,M,A,E) + P(B,J,M,A,-E) + P(B,J,M,-
 	P(B,J,M,A,-E) = P(B)P(J|A)P(M|A)P(A|B+-E)P(-E) = 0.001*0.9*0.7*0.94*0.998 = 0.000591
 	P(B,J,M,-A,E) = P(B)P(J|-A)P(M|-A)P(-A|B+E)P(E) = 0.001*0.05*0.01*0.05*0.002 = 0.000000000005
 	P(B,J,M,-A,-E) = P(B)P(J|-A)P(M|-A)P(-A|B+-E)P(-E) = 0.001*0.05*0.01*0.06*0.998 = 0.0000000299
-	P(B,J,M) = P(B)(P(J|A)+P(J|-A))(P(M|A)+P(M|-A)) = 0.001*(0.9+0.05)*(0.7+0.01) = 0.0006745
-	P(-B,J,M) = P(-B)(P(J|A)+P(J|-A))(P(M|A)+P(M|-A)) = 0.999*(0.9+0.05)*(0.7+0.01) = 0.674
-	P(Burglary|JohnCalls + MaryCalls) = (0.000001197 + 0.000591 + 0.000000000005 + 0.0000000299)/(0.0006745 + 0.674) = 0.001
+	P(B,J,M) = P(B,J,M,A,E) + P(B,J,M,A,-E) + P(B,J,M,-A,E) + P(B,J,M,-A,-E) = 0.000001197 + 0.000591 + 0.000000000005 + 0.0000000299 = 0.000676
+	P(-B,J,M) = P(-B,J,M,A,E) + P(-B,J,M,A,-E) + P(-B,J,M,-A,E) + P(-B,J,M,-A,-E)
+	P(-B,J,M,A,E) = P(-B)P(J|A)P(M|A)P(A|-B+E)P(E) = 0.999 * 0.9 * 0.7 * 0.29 * 0.002 = 0.000365
+	P(-B,J,M,A,-E) = P(-B)P(J|A)P(M|A)P(A|-B+-E)P(-E) = 0.999 * 0.9 * 0.7 * 0.001 * 0.998 = 0.000628
+	P(-B,J,M,-A,E) = P(-B)P(J|-A)P(M|-A)P(-A|-B+E)P(E) = 0.999 * 0.05 * 0.01 * 0.71 * 0.002 = 0.000000709
+	P(-B,J,M,-A,-E) = P(-B)P(J|-A)P(M|-A)P(-A|-B+-E)P(-E) = 0.999 * 0.05 * 0.01 * 0.999 * 0.998 = 0.000498
+	P(-B,J,M) = 0.000365 + 0.000628 + 0.000000709 + 0.000498 = 0.00149
+	P(Burglary|JohnCalls + MaryCalls) = (0.000676)/(0.000676 + 0.00149) = 0.312
 	
 B)	enumeration tree would be a straight line. Therefore worst case is that all n variables must be checked. 
 	complexity using enumeration = O(n)
@@ -77,11 +82,16 @@ B)
 	P(Fraud) = 0.01*0.05 + 0.004*0.95
 	P(Fraud) = 0.0043
 	
-	P(Fraud | FP + -IP + CRP) = (P(Fraud + FP + -IP + CRP + Trav + OC) + P(Fraud + FP + -IP + CRP + Trav + !OC) + P(Fraud + FP + -IP + CRP + !Trav + OC) + P(Fraud + FP + -IP + CRP + !Trav + !OC))/(P(Fraud + FP + -IP + CRP) + P(-Fraud + FP + -IP + CRP + Trav + OC))
+	P(Fraud | FP + -IP + CRP) = (P(Fraud + FP + -IP + CRP + Trav + OC) + P(Fraud + FP + -IP + CRP + Trav + !OC) + P(Fraud + FP + -IP + CRP + !Trav + OC) + P(Fraud + FP + -IP + CRP + !Trav + !OC))/(P(Fraud + FP + -IP + CRP) + P(-Fraud + FP + -IP + CRP))
 	P(Fraud + FP + -IP + CRP + Trav + OC) = P(Fraud|Trav)P(FP|Trav+Fraud)P(-IP|OC+Fraud)P(CRP|OC)P(Trav)P(OC) = 0.01 * 0.9 * 0.99 * 0.1 * 0.05 * 0.75 = 0.0000334125
 	P(Fraud + FP + -IP + CRP + Trav + !OC) = P(Fraud|Trav)P(FP|Trav+Fraud)P(-IP|-OC+Fraud)P(CRP|-OC)P(Trav)P(-OC) = 0.01 * 0.9 * 0.999 * 0.001 * 0.05 * 0.25 = 0.0000001124
 	P(Fraud + FP + -IP + CRP + !Trav + OC) = P(Fraud|-Trav)P(FP|-Trav+Fraud)P(-IP|OC+Fraud)P(CRP|OC)P(-Trav)P(OC) = 0.004 * 0.1 * 0.99 * 0.1 * 0.95 * 0.75 = 0.000028215
 	P(Fraud + FP + -IP + CRP + !Trav + !OC) = P(Fraud|-Trav)P(FP|-Trav+Fraud)P(-IP|-OC+Fraud)P(CRP|-OC)P(-Trav)P(-OC) = 0.004 * 0.1 * 0.999 * 0.001 * 0.95 * 0.25 = 0.0000000949
-	P(Fraud + FP + -IP + CRP) = (P(Fraud|Trav)+P(Fraud|-Trav))(P(FP|Trav+Fraud)+P(FP|-Trav+Fraud))(P(-IP|OC+Fraud)+P(-IP|-OC+Fraud))(P(CRP|-OC)+P(CRP|OC)) = (0.01+0.004)(0.9+0.1)(0.99+0.999)(0.1+0.001) = 0.014 * 1 * 1.989 * 0.101 = 0.002812446
-	P(-Fraud + FP + -IP + CRP) = (P(-Fraud|Trav)+P(-Fraud|-Trav))(P(FP|Trav+-Fraud)+P(FP|-Trav+-Fraud))(P(-IP|OC+-Fraud)+P(-IP|-OC+-Fraud))(P(CRP|-OC)+P(CRP|OC)) = (0.99+0.996)(0.9+0.01)(0.98+0.989)(0.1+0.001) = 1.986 * 0.91 * 1.969 * 0.101 = 0.3594079889
-	P(Fraud | FP + -IP + CRP) = (0.0000334125 + 0.0000001124 + 0.000028215 + 0.0000000949)/(0.002812446 + 0.3594079889) = 0.00017
+	P(Fraud + FP + -IP + CRP) = P(Fraud + FP + -IP + CRP + Trav + OC) + P(Fraud + FP + -IP + CRP + Trav + !OC) + P(Fraud + FP + -IP + CRP + !Trav + OC) + P(Fraud + FP + -IP + CRP + !Trav + !OC) = 0.0000334125 + 0.0000001124 + 0.000028215 + 0.0000000949 = 0.0000618
+	P(-Fraud + FP + -IP + CRP) = P(-Fraud + FP + -IP + CRP + Trav + OC) + P(-Fraud + FP + -IP + CRP + Trav + !OC) + P(-Fraud + FP + -IP + CRP + !Trav + OC) + P(-Fraud + FP + -IP + CRP + !Trav + !OC)
+	P(-Fraud + FP + -IP + CRP + Trav + OC) = P(-Fraud|Trav)P(FP|Trav+-Fraud)P(-IP|OC+-Fraud)P(CRP|OC)P(Trav)P(OC) = 0.99 * 0.9 * 0.98 * 0.1 * 0.05 * 0.75 = 0.00327
+	P(-Fraud + FP + -IP + CRP + Trav + !OC) = P(-Fraud|Trav)P(FP|Trav+-Fraud)P(-IP|-OC+-Fraud)P(CRP|-OC)P(Trav)P(-OC) = 0.99 * 0.9 * 0.989 * 0.001 * 0.05 * 0.25 = 0.0000110
+	P(-Fraud + FP + -IP + CRP + !Trav + OC) = P(-Fraud|-Trav)P(FP|-Trav+-Fraud)P(-IP|OC+-Fraud)P(CRP|OC)P(-Trav)P(OC) = 0.996 * 0.01 * 0.98 * 0.1 * 0.95 * 0.75 = 0.000639
+	P(-Fraud + FP + -IP + CRP + !Trav + !OC) = P(-Fraud|-Trav)P(FP|-Trav+-Fraud)P(-IP|-OC+-Fraud)P(CRP|-OC)P(-Trav)P(-OC) = 0.996 * 0.01 * 0.989 * 0.001 * 0.95 * 0.25 = 0.00000234
+	P(-Fraud,FP,-IP,CRP) = 0.00327 + 0.0000110 + 0.000639 + 0.00000234 = 0.00392
+	P(Fraud | FP + -IP + CRP) = (0.0000618)/(0.0000618 + 0.00392) = 0.155
