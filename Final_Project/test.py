@@ -27,7 +27,7 @@ g = []
 index = 0
 
 
-for k in range(num_of_o - 1): # initial all value in the list to be zero
+for k in range(num_of_o): # initial all value in the list to be zero
     g.append(0)
 
 print(len(g))
