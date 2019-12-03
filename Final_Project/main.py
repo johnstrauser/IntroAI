@@ -1,8 +1,9 @@
-import numpy as np
+#import numpy as np
 import random
+from training import training_labels,training_data
 
 def perceptron(a, f, identifier, g, w):
-
+    '''
     if identifier == 0:
         # only 1 f(x) needed. Face is 60*74, digit is 28*28
         # let's say, for face image, we divide the whole image into 6*7 small matrix with
@@ -27,7 +28,7 @@ def perceptron(a, f, identifier, g, w):
         # now we just multiply, i.e. w[0]*g[0] + w[1]*g[1] ... to get the f value
         for ...
             f += w[i]*g[j]
-
+    '''
     return
 
 
@@ -36,6 +37,24 @@ def naive_bayes():
     return
 
 
+type = input("Enter the type of data to run ('f' for faces or 'i' for images): ")
+percent = input("Enter the percentage of training data to use in decimal form (0.5 for 50%): ")
+algorithm = input("Enter the algorithm to use ('p' for perceptron, 'n' for naive bayes, 'o' other algortihm TBD): ")
+
+labels = training_labels(type,float(percent))
+data_regions = training_data(type,float(percent))
+
+print("Labels:")
+for label in labels:
+    print(str(label), end=" ")
+print("")
+
+print("Data Regions:")
+for i in range(len(data_regions)):
+    for j in range(len(data_regions[0])):
+        print(data_regions[i][j], end=" ")
+    print("")
+'''
 # main starts here
 # g is a list holds number of # in the given region
 g = []
@@ -68,3 +87,4 @@ for ...
     elif f < 0 and b == 1:
         for...
             w[i] = w[i] + g[i]
+'''
