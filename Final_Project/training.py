@@ -47,26 +47,35 @@ def training_data(type,percent):
     num_images = int(labels_length*percent)
     
     num_x_regions = 6
-    num_y_regions = 7
+    num_y_regions = 6
     total_regions = num_x_regions*num_y_regions
     x_region_size = int(data_width/num_x_regions)
     y_region_size = int(length_per_image/num_y_regions)
 
-    output = [[0 for i in range(num_images)] for j in range(total_regions)]
+    output = [[0 for i in range(total_regions)] for j in range(num_images)]
     
     file = open(data_path,"r")
     for n in range(num_images):
         #print("image "+str(n))
-        for i in range((int(length_per_image))):
+        for j in range((int(length_per_image))):
             line = file.readline()
-            for j in range(len(line)):
-                index = (int(j/y_region_size) * num_x_regions) + int(i/x_region_size)
-                #print("i:"+str(i)+" j:"+str(j)+" is region:"+str(index))
-                if index > total_regions:
-                    index = total_regions
-                if line[j] != ' ':
+            calc_j = j
+            if calc_j >= (num_y_regions * y_region_size):
+                calc_j = (num_y_regions * y_region_size)-1
+            for i in range(len(line)):
+                calc_i = i
+                if calc_i >= (num_x_regions * x_region_size):
+                    calc_i = (num_x_regions * x_region_size)-1
+                index = (int(calc_j/y_region_size) * num_x_regions) + int(calc_i/x_region_size)
+                '''
+                print("i:"+str(i)+" j:"+str(j)+" is region:"+str(index))
+                if index == (num_x_regions * num_y_regions):
+                    print("calc_i = "+str(calc_i)+" calc_j = "+str(calc_j))
+                    print("y size = "+str(y_region_size)+" x size = "+str(x_region_size))
+                '''
+                if line[i] != ' ':
                     #print("index="+str(index)+" total_regions="+str(total_regions))
-                    output[index-1][n] += 1
+                    output[n][index] += 1
     file.close()
     #print(total_regions)
     #print(num_images)

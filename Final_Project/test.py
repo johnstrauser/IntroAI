@@ -1,3 +1,10 @@
+
+arr = [[0 for i in range(3)] for j in range(10)]
+print(str(arr[2][2]))
+print(str(arr[5][2]))
+print(str(arr[2][5]))
+
+'''
 # load the file, store the first image into the 'image' list
 image = []
 f = open("facedatatrain")
@@ -46,3 +53,4 @@ for i in range(60):
 
 
 # we want input[the ith ][]
+'''
