@@ -1,56 +1,112 @@
+from pathlib import Path
 
-arr = [[0 for i in range(3)] for j in range(10)]
-print(str(arr[2][2]))
-print(str(arr[5][2]))
-print(str(arr[2][5]))
+#Utility function
+#Takes a file path in and returns how many lines are in the file
+def file_length(file_name):
+    num_lines = sum(1 for line in open(file_name))
+    return num_lines;
 
-'''
-# load the file, store the first image into the 'image' list
-image = []
-f = open("facedatatrain")
-for x, line in enumerate(f):
-    if x >= 0 and x <= 69:
-        image.append(line)
-f.close()
+#Utility function
+#Takes a file path in and returns the length of the widest line in the file
+def file_width(file_name):
+    width = 0
+    file = open(file_name,"r")
+    lines = file.readlines()
+    for i in range(len(lines)):
+        length = len(lines[i])
+        if width < length:
+            width = length
+    file.close()
+    return width-1;
 
-# print(image)
+#Main function
+#inputs: type ('f'ace or 'i'mage), percent (percentage of training data to collect)
+#output: 2d list containing region counts for each image collected from training data
+def test_data(type,percent, num_x_regions, num_y_regions):
+    #determine which training file to open
+    file_name = ""
+    labels_name = ""
+    if type == 'f':
+        file_name = "facedatatest"
+        labels_name = "facedatatestlabels"
+    elif type == 'd':
+        file_name = "testimages"
+        labels_name = "testlabels"
+    else:
+        print("input type must be 'f' or 'd'.")
+        return []
+    #calculate length and width of training file
+    data_folder = Path("./data")
+    data_path = data_folder / file_name
+    labels_path = data_folder / labels_name
+    data_length = file_length(data_path)
+    data_width = file_width(data_path)
+    labels_length = file_length(labels_path)
+    
+    length_per_image = int(data_length/labels_length)
+    num_images = int(labels_length*percent)
+    
+    total_regions = num_x_regions*num_y_regions
+    x_region_size = int(data_width/num_x_regions)
+    y_region_size = int(length_per_image/num_y_regions)
 
-# check number of '#' in a specific region
-#length = len(image[0])
-# for i in range(length):
-# if image[0][i] == '#':
-#print(length)
-#print(image[2])
-#print(image[2][30])
+    output = [[0 for i in range(total_regions)] for j in range(num_images)]
+    
+    file = open(data_path,"r")
+    for n in range(num_images):
+        #print("image "+str(n))
+        for j in range((int(length_per_image))):
+            line = file.readline()
+            calc_j = j
+            if calc_j >= (num_y_regions * y_region_size):
+                calc_j = (num_y_regions * y_region_size)-1
+            for i in range(len(line)):
+                calc_i = i
+                if calc_i >= (num_x_regions * x_region_size):
+                    calc_i = (num_x_regions * x_region_size)-1
+                index = (int(calc_j/y_region_size) * num_x_regions) + int(calc_i/x_region_size)
+                '''
+                print("i:"+str(i)+" j:"+str(j)+" is region:"+str(index))
+                if index == (num_x_regions * num_y_regions):
+                    print("calc_i = "+str(calc_i)+" calc_j = "+str(calc_j))
+                    print("y size = "+str(y_region_size)+" x size = "+str(x_region_size))
+                '''
+                if line[i] != ' ':
+                    #print("index="+str(index)+" total_regions="+str(total_regions))
+                    output[n][index] += 1
+    file.close()
+    #print(total_regions)
+    #print(num_images)
+    return output
 
-# count number of '#' for a single image, spliting by each o
-# o is the small region
-num_of_x = 6
-num_of_y = 7
-x = 10
-y = 10
-num_of_o = num_of_x * num_of_y
-g = []
-index = 0
+#Main function
+#inputs: type ('f'ace or 'i'mage), percent (percentage of training labels to collect)
+#output: list containing the training labels as ints
+def test_labels(type,percent):
+    #determine which training file to open
+    file_name = ""
+    if type == 'f':
+        file_name = "facedatatestlabels"
+    elif type == 'd':
+        file_name = "testlabels"
+    else:
+        print("input type must be 'f' or 'd'.")
+        return []
+    #calculate length of training file
+    data_folder = Path("./data")
+    path = data_folder / file_name
+    length = file_length(path)
+    #apply percentage to length
+    output_size = int(length*percent)
+    #open file
+    file = open(path,"r")
+    output = []
+    #for [0,length*percent] read line
+        #append line as int to output list
+    for i in range(output_size):
+        line = file.readline()
+        output.append(int(line))
+    #close file and return
+    file.close()
+    return output
 
-
-for k in range(num_of_o): # initial all value in the list to be zero
-    g.append(0)
-
-print(len(g))
-
-# range(5): 0-4; range(6,10): 6-9
-for i in range(60):
-    for j in range(70):
-        index = ((j/y) * num_of_x) + (i/x)
-        print(index)
-        print(j, i)
-        if image[j][i] == '#':
-            g[index] = g[index] + 1
-
-
-
-
-
-# we want input[the ith ][]
-'''

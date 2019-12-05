@@ -22,18 +22,18 @@ def file_width(file_name):
 #Main function
 #inputs: type ('f'ace or 'i'mage), percent (percentage of training data to collect)
 #output: 2d list containing region counts for each image collected from training data
-def training_data(type,percent):
+def training_data(type,percent, num_x_regions, num_y_regions):
     #determine which training file to open
     file_name = ""
     labels_name = ""
     if type == 'f':
         file_name = "facedatatrain"
         labels_name = "facedatatrainlabels"
-    elif type == 'i':
+    elif type == 'd':
         file_name = "trainingimages"
         labels_name = "traininglabels"
     else:
-        print("input type must be 'f' or 'i'.")
+        print("input type must be 'f' or 'd'.")
         return []
     #calculate length and width of training file
     data_folder = Path("./data")
@@ -46,8 +46,6 @@ def training_data(type,percent):
     length_per_image = int(data_length/labels_length)
     num_images = int(labels_length*percent)
     
-    num_x_regions = 6
-    num_y_regions = 6
     total_regions = num_x_regions*num_y_regions
     x_region_size = int(data_width/num_x_regions)
     y_region_size = int(length_per_image/num_y_regions)
@@ -89,10 +87,10 @@ def training_labels(type,percent):
     file_name = ""
     if type == 'f':
         file_name = "facedatatrainlabels"
-    elif type == 'i':
+    elif type == 'd':
         file_name = "traininglabels"
     else:
-        print("input type must be 'f' or 'i'.")
+        print("input type must be 'f' or 'd'.")
         return []
     #calculate length of training file
     data_folder = Path("./data")
