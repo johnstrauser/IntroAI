@@ -2,35 +2,17 @@
 import random
 from training import training_labels,training_data
 from test import test_labels,test_data
-'''
-def perceptron(a, f, identifier, g, w):
-    if identifier == 0:
-        # only 1 f(x) needed. Face is 60*74, digit is 28*28
-        # let's say, for face image, we divide the whole image into 6*7 small matrix with
-        # 10*10 each, while the last one of each column has 6*14 (because of the remainder)
-        # and extract one of them each time
 
-        # the range for the for loop depends on numbers of image we want to divide into
-        for...
-            k = random.uniform(-1, 1)
-            w.append(k)
+class Table():
+    def __init__(self, num_regions=None, region_size=None):
+        self.pos_table = [[0 for j in range(region_size)] for i in range(num_regions)]
+        self.neg_table = [[0 for j in range(region_size)] for i in range(num_regions)]
+        self.pos_count = 0
+        self.neg_count = 0
+        self.pos_value = 0.0
+        self.neg_value = 0.0
 
-        # extract the wanted region in a, need to be implemented
-        for ...
-
-            region = ...
-
-            # number of #(refer to the file facedatatrain.txt) in the region we just extracted at line 20
-            num_non_empty = ...
-            g.append(num_non_empty)
-
-        # note the length of g should be the same as the length of w (without bias)
-        # now we just multiply, i.e. w[0]*g[0] + w[1]*g[1] ... to get the f value
-        for ...
-            f += w[i]*g[j]
-    return
-'''
-def perceptron_f(labels, regions, type, percent, test_labels, test_data_regions):
+def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
     #init important values
     num_images = len(labels)
     num_regions = len(regions[0])
@@ -101,7 +83,7 @@ def perceptron_f(labels, regions, type, percent, test_labels, test_data_regions)
     print(" correct "+str(percent_correct*100)+"% of the time")
     return percent_correct
 
-def perceptron_d(labels, regions, type, percent, test_labels, test_data_regions):
+def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
     #init important values
     num_images = len(labels)
     num_regions = len(regions[0])
@@ -161,10 +143,53 @@ def perceptron_d(labels, regions, type, percent, test_labels, test_data_regions)
     print(" correct "+str(percent_correct*100)+"% of the time")
     return percent_correct
 
-def naive_bayes():
-
+def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_data_regions):
+    #init needed value
+    num_training_images = len(training_labels)
+    num_regions = len(training_regions[0])
+    
+    #init table class
+    #since type is f, image is 60x70
+    region_max = int((60*70) / num_regions)
+    face_tables = Table(num_regions, region_max)
+    
+    face_tables.pos_count = count_value(training_labels, 1)
+    face_tables.pos_value = float(face_tables.pos_count / num_training_images)
+    face_tables.neg_count = count_value(training_labels, 0)
+    face_tables.neg_value = float(face_tables.neg_count / num_training_images)
+    
+    #fill face tables
+    for i in range(num_regions):
+        for j in range(num_training_images):
+            count = training_regions[j][i]
+            if training_labels[j] == 1:
+                face_tables.pos_table[i][count] += 1
+            else:
+                face_tables.neg_table[i][count] += 1
+    
+    for i in range(len(face_tables.pos_table)):
+        for j in range(len(face_tables.pos_table[0])):
+            if face_tables.pos_table[i][j] == 0:
+                face_tables.pos_table[i][j] = 0.0001
+            else:
+                face_tables.pos_table[i][j] /= face_tables.pos_count
+            
+            if face_tables.neg_table[i][j] == 0:
+                face_tables.neg_table[i][j] = 0.001
+            else:
+                face_tables.neg_table[i][j] /= face_tables.neg_count
+    
+    print(face_tables.pos_table[0])
+    print(face_tables.neg_table[0])
     return
 
+def count_value(list, val):
+    count = 0
+    for entry in list:
+        if entry == val:
+            count += 1
+    return count
+    
 def get_max_index(list):
     out = 0
     for i in range(1,len(list)):
@@ -175,7 +200,7 @@ def get_max_index(list):
 #percent = input("Enter the percentage of images to train against (0.5 for 50%): ")
 #algorithm = input("Enter the algorithm to use ('p' for perceptron, 'n' for naive bayes, 'o' other algortihm TBD): ")
 
-type = 'd'
+type = 'f'
 percent = 1.0
 algorithm = 'p'
 
@@ -189,10 +214,11 @@ test_labels = test_labels(type,1.0)
 test_data_regions = test_data(type,1.0, num_x_regions, num_y_regions)
 
 sum = 0
-runs = 10
+runs = 1
 for i in range(runs):
-    sum += perceptron_d(labels, data_regions, type, percent, test_labels, test_data_regions)
-print("average correctness = "+str((sum/runs)*100))
+    #sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
+    naive_bayes_f(labels, data_regions, percent, test_labels, test_data_regions)
+#print("average correctness = "+str((sum/runs)*100))
 '''
 #use if statements to call functions for algorithms
 if algorithm == 'p':
