@@ -145,7 +145,7 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
 
 def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_data_regions):
     #init needed value
-    num_training_images = len(training_labels)
+    num_training_images = int(len(training_labels) * percent)
     num_regions = len(training_regions[0])
     
     #init table class
@@ -179,8 +179,28 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
             else:
                 face_tables.neg_table[i][j] /= face_tables.neg_count
     
-    print(face_tables.pos_table[0])
-    print(face_tables.neg_table[0])
+    
+    #calculate against the test data
+    num_test_images = len(test_labels)
+    correct = 0
+    for n in range(num_test_images):
+        prob_pos = 1.0
+        prob_neg = 1.0
+        for i in range(num_regions):
+            region_count = test_data_regions[n][i]
+            prob_pos *= face_tables.pos_table[i][region_count]
+            prob_neg *= face_tables.neg_table[i][region_count]
+        total_prob = (prob_pos * face_tables.pos_value)/(prob_neg * face_tables.neg_value)
+        if total_prob >= 1 and test_labels[n] == 1:
+            correct += 1
+        elif total_prob < 1 and test_labels[n] == 0:
+            correct += 1
+    #calculate correctness
+    percent_correct = float(correct)/float(num_test_images)
+    #print(" correct "+str(percent_correct*100)+"% of the time")
+    return percent_correct*100
+
+def naive_bayes_d():
     return
 
 def count_value(list, val):
@@ -202,7 +222,7 @@ def get_max_index(list):
 
 type = 'f'
 percent = 1.0
-algorithm = 'p'
+algorithm = 'n'
 
 num_x_regions = 10
 num_y_regions = 10
@@ -214,54 +234,22 @@ test_labels = test_labels(type,1.0)
 test_data_regions = test_data(type,1.0, num_x_regions, num_y_regions)
 
 sum = 0
-runs = 1
-for i in range(runs):
-    #sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
-    naive_bayes_f(labels, data_regions, percent, test_labels, test_data_regions)
-#print("average correctness = "+str((sum/runs)*100))
-'''
-#use if statements to call functions for algorithms
-if algorithm == 'p':
-    perceptron(labels, data_regions, type, percent, test_labels, test_data_regions)
-    '''
-'''
-elif algorithm == 'n':
-    #naive_bayes()
-else:
-    #other algorithm
-    print("other")
-'''
-'''
-# main starts here
-# g is a list holds number of # in the given region
-g = []
-
-# w is the weight for corresponding g value, initially it is a random number between -1 and 1
-# note: i am not sure about the bias value therefore have not added it here
-w = []
-
-# f(x), < 0 means not face >= 0 means is face
-f = 0
-
-# load the data, have not got it right though
-# ideally, a should be a 2d matrix contains a single image. b should be a 1d array
-# to store the label(face or not face) corresponding to each image
-for ...
-
-    a = np.loadtxt('facedatatrain.txt')
-    b = np.loadtxt('facedatatestlabels.txt')
-
-    # identifier to know we are predicting face or digit. 0 represents face and 1 represents digit
-    identifier = 0
-    perceptron(a, f, identifier, g, w)
-
-    # if we predict it right, move on. Otherwise we do the penalty
-    # again, bias is not included
-    if f >= 0 and b == 0:
-        for...
-            w[i] = w[i] - g[i]
-
-    elif f < 0 and b == 1:
-        for...
-            w[i] = w[i] + g[i]
-'''
+runs = 10
+if algorithm == 'n':
+    steps = [x*0.1 for x in range(1,int((percent*10)+1))]
+    for step in steps:
+        if type == 'f':
+            val = naive_bayes_f(labels, data_regions, step, test_labels, test_data_regions)
+            print(str(step)+"% of training data was correct "+str(val)+"% of the time")
+            sum += val
+        else:
+            naive_bayes_d()
+    print("average correctness = "+str((sum/len(steps))))
+elif algorithm == 'p':
+    for i in range(runs):
+        if type == 'f':
+            sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
+        else:
+            sum += perceptron_f(labels, data_regions, percent, test_labels, test_data_regions)
+    print("average correctness = "+str((sum/runs)*100))
+#TODO MIRA
