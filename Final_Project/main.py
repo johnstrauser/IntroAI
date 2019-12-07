@@ -126,7 +126,7 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
     #Perform tests for get f value for each image
     correct = 0
     num_test_images = len(test_labels)
-    print(num_test_images)
+    #print(num_test_images)
     #print("num test images = "+str(num_test_images))
     for n in range(num_test_images):
         f = [0 for i in range(10)]
