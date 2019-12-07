@@ -150,12 +150,12 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
     
     #init table class
     #since type is f, image is 60x70
-    region_max = int((60*70) / num_regions)
+    region_max = int((60*70) / num_regions)+1
     face_tables = Table(num_regions, region_max)
     
     face_tables.pos_count = count_value(training_labels, 1)
     face_tables.pos_value = float(face_tables.pos_count / num_training_images)
-    face_tables.neg_count = count_value(training_labels, 0)
+    face_tables.neg_count = num_training_images - face_tables.pos_count
     face_tables.neg_value = float(face_tables.neg_count / num_training_images)
     
     #fill face tables
@@ -179,7 +179,6 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
             else:
                 face_tables.neg_table[i][j] /= face_tables.neg_count
     
-    
     #calculate against the test data
     num_test_images = len(test_labels)
     correct = 0
@@ -200,8 +199,70 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
     #print(" correct "+str(percent_correct*100)+"% of the time")
     return percent_correct*100
 
-def naive_bayes_d():
-    return
+def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_data_regions):
+    #init needed value
+    num_training_images = int(len(training_labels) * percent)
+    num_regions = len(training_regions[0])
+    
+    #init table class
+    #since type is f, image is 28x28
+    region_max = int((28*28) / num_regions)+1
+    face_tables = []
+    for i in range(10):
+        face_tables.append(Table(num_regions, region_max))
+    
+    for i in range(len(face_tables)):
+        face_tables[i].pos_count = count_value(training_labels, i)
+        face_tables[i].pos_value = float(face_tables[i].pos_count / num_training_images)
+        face_tables[i].neg_count = num_training_images - face_tables[i].pos_count
+        face_tables[i].neg_value = float(face_tables[i].neg_count / num_training_images)
+    
+    #fill face tables
+    for i in range(num_regions):
+        for j in range(num_training_images):
+            count = training_regions[j][i]
+            label = training_labels[j]
+            for k in range(len(face_tables)):
+                if label == k:
+                    #print("k="+str(k)+" max k="+str(len(face_tables)))
+                    #print("i="+str(i)+" max i="+str(len(face_tables[k].pos_table)))
+                    #print("count="+str(count)+" max count="+str(len(face_tables[k].pos_table[i])))
+                    face_tables[k].pos_table[i][count] += 1
+                else:
+                    face_tables[k].neg_table[i][count] += 1
+    
+    for k in range(len(face_tables)):
+        for i in range(len(face_tables[k].pos_table)):
+            for j in range(len(face_tables[k].pos_table[0])):
+                if face_tables[k].pos_table[i][j] == 0:
+                    face_tables[k].pos_table[i][j] = 0.0001
+                else:
+                    face_tables[k].pos_table[i][j] /= face_tables[k].pos_count
+            
+                if face_tables[k].neg_table[i][j] == 0:
+                    face_tables[k].neg_table[i][j] = 0.001
+                else:
+                    face_tables[k].neg_table[i][j] /= face_tables[k].neg_count
+                    
+    num_test_images = len(test_labels)
+    correct = 0
+    for n in range(num_test_images):
+        prob_pos = [1.0 for x in range(10)]
+        prob_neg = [1.0 for x in range(10)]
+        for i in range(num_regions):
+            region_count = test_data_regions[n][i]
+            for k in range(10):
+                prob_pos[k] *= face_tables[k].pos_table[i][region_count]
+                prob_neg[k] *= face_tables[k].neg_table[i][region_count]
+        total_prob = []
+        for i in range(10):
+            total_prob.append((prob_pos[i] * face_tables[i].pos_value)/(prob_neg[i] * face_tables[i].neg_value))
+        max_index = get_max_index(total_prob)
+        if max_index == test_labels[n]:
+            correct += 1
+    
+    percent_correct = float(correct)/float(num_test_images)
+    return percent_correct*100
 
 def count_value(list, val):
     count = 0
@@ -220,12 +281,12 @@ def get_max_index(list):
 #percent = input("Enter the percentage of images to train against (0.5 for 50%): ")
 #algorithm = input("Enter the algorithm to use ('p' for perceptron, 'n' for naive bayes, 'o' other algortihm TBD): ")
 
-type = 'f'
+type = 'd'
 percent = 1.0
 algorithm = 'n'
 
-num_x_regions = 10
-num_y_regions = 10
+num_x_regions = 7
+num_y_regions = 7
 
 labels = training_labels(type,1.0)
 data_regions = training_data(type,1.0, num_x_regions, num_y_regions)
@@ -240,10 +301,12 @@ if algorithm == 'n':
     for step in steps:
         if type == 'f':
             val = naive_bayes_f(labels, data_regions, step, test_labels, test_data_regions)
-            print(str(step)+"% of training data was correct "+str(val)+"% of the time")
+            print(str(int(step*100))+"% of training data was correct "+str(val)+"% of the time")
             sum += val
         else:
-            naive_bayes_d()
+            val = naive_bayes_d(labels, data_regions, step, test_labels, test_data_regions)
+            print(str(int(step*100))+"% of training data was correct "+str(val)+"% of the time")
+            sum += val
     print("average correctness = "+str((sum/len(steps))))
 elif algorithm == 'p':
     for i in range(runs):
