@@ -1,7 +1,9 @@
 import numpy as np
 import random
+import statistics
 from training import training_labels,training_data
 from test import test_labels,test_data
+import timeit
 
 class Table():
     def __init__(self, num_regions=None, region_size=None):
@@ -17,6 +19,15 @@ def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
     num_images = len(labels)
     num_regions = len(regions[0])
     #print("num_images="+str(num_images))
+    
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_images)
+        rand_regions.append(regions[rand_int])
+        rand_labels.append(labels[rand_int])
+        
     
     bias = random.choice([-1,0,1])
     #create array of w values
@@ -39,20 +50,20 @@ def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
         for n in range(num_images_step):
             f = 0
             for i in range(num_regions):
-                f += (w[i]*regions[n][i])
+                f += (w[i]*rand_regions[n][i])
             f += bias
-            if f >= 0 and labels[n] != 1:
+            if f >= 0 and rand_labels[n] != 1:
                 #for each region
                     #w[i] -= regions[n][i]
                 for i in range(num_regions):
-                    w[i] -= regions[n][i]
+                    w[i] -= rand_regions[n][i]
                     bias -= 1
                 #num_penalties+=1
-            elif f < 0 and labels[n] == 1:
+            elif f < 0 and rand_labels[n] == 1:
                 #for each region
                     #w[i] += regions[n][i]
                 for i in range(num_regions):
-                    w[i] += regions[n][i]
+                    w[i] += rand_regions[n][i]
                     bias += 1
                 #num_penalties+=1
     #print("num penalties = "+str(num_penalties))
@@ -81,12 +92,21 @@ def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
     #Output results somehow
     percent_correct = float(correct)/float(num_test_images)
     print(" correct "+str(percent_correct*100)+"% of the time")
-    return percent_correct
+    return percent_correct*100
 
 def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
     #init important values
     num_images = len(labels)
     num_regions = len(regions[0])
+    
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_images)
+        rand_regions.append(regions[rand_int])
+        rand_labels.append(labels[rand_int])
+    
     #init bias
     bias = [random.choice([-1,0,1]) for i in range(10)]
     #init w
@@ -101,7 +121,7 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
             f = [0 for i in range(10)]
             for i in range(len(f)):
                 for j in range(num_regions):
-                    f[i] += (w[i][j]*regions[n][j])
+                    f[i] += (w[i][j]*rand_regions[n][j])
                     #print("")
                 f[i] += bias[i]
                 
@@ -110,16 +130,16 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
             max_index = get_max_index(f)
             #print("max x = f["+str(max_index)+"] = "+str(f[max_index]))
             #print("label = "+str(labels[n]))
-            if max_index != labels[n]:
+            if max_index != rand_labels[n]:
                 penalties += 1
                 #decrease w of max_index and increase w of labels[n]
                 for i in range(num_regions):
-                    w[max_index][i] -= regions[n][i]
-                    w[labels[n]][i] += regions[n][i]
+                    w[max_index][i] -= rand_regions[n][i]
+                    w[rand_labels[n]][i] += rand_regions[n][i]
                 #decrease bias of max_index
                 bias[max_index] -= 1
                 #increase bias of labels[n]
-                bias[labels[n]] += 1
+                bias[rand_labels[n]] += 1
         #print("penalties = "+str(penalties))
     #data to test against
     #test_labels ad test_data_regions
@@ -141,28 +161,36 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
             
     percent_correct = float(correct)/float(num_test_images)
     print(" correct "+str(percent_correct*100)+"% of the time")
-    return percent_correct
+    return percent_correct*100
 
 def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_data_regions):
     #init needed value
     num_training_images = int(len(training_labels) * percent)
     num_regions = len(training_regions[0])
     
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_training_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_training_images)
+        rand_regions.append(training_regions[rand_int])
+        rand_labels.append(training_labels[rand_int])
+    
     #init table class
     #since type is f, image is 60x70
     region_max = int((60*70) / num_regions)+1
     face_tables = Table(num_regions, region_max)
     
-    face_tables.pos_count = count_value(training_labels, 1)
-    face_tables.pos_value = float(face_tables.pos_count / num_training_images)
-    face_tables.neg_count = num_training_images - face_tables.pos_count
-    face_tables.neg_value = float(face_tables.neg_count / num_training_images)
+    face_tables.pos_count = count_value(rand_labels, 1)
+    face_tables.pos_value = float(face_tables.pos_count / num_images_percent)
+    face_tables.neg_count = num_images_percent - face_tables.pos_count
+    face_tables.neg_value = float(face_tables.neg_count / num_images_percent)
     
     #fill face tables
     for i in range(num_regions):
-        for j in range(num_training_images):
-            count = training_regions[j][i]
-            if training_labels[j] == 1:
+        for j in range(num_images_percent):
+            count = rand_regions[j][i]
+            if rand_labels[j] == 1:
                 face_tables.pos_table[i][count] += 1
             else:
                 face_tables.neg_table[i][count] += 1
@@ -196,13 +224,21 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
             correct += 1
     #calculate correctness
     percent_correct = float(correct)/float(num_test_images)
-    #print(" correct "+str(percent_correct*100)+"% of the time")
+    print(" correct "+str(percent_correct*100)+"% of the time")
     return percent_correct*100
 
 def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_data_regions):
     #init needed value
     num_training_images = int(len(training_labels) * percent)
     num_regions = len(training_regions[0])
+    
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_training_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_training_images)
+        rand_regions.append(training_regions[rand_int])
+        rand_labels.append(training_labels[rand_int])
     
     #init table class
     #since type is f, image is 28x28
@@ -212,16 +248,16 @@ def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_
         face_tables.append(Table(num_regions, region_max))
     
     for i in range(len(face_tables)):
-        face_tables[i].pos_count = count_value(training_labels, i)
-        face_tables[i].pos_value = float(face_tables[i].pos_count / num_training_images)
-        face_tables[i].neg_count = num_training_images - face_tables[i].pos_count
-        face_tables[i].neg_value = float(face_tables[i].neg_count / num_training_images)
+        face_tables[i].pos_count = count_value(rand_labels, i)
+        face_tables[i].pos_value = float(face_tables[i].pos_count / num_images_percent)
+        face_tables[i].neg_count = num_images_percent - face_tables[i].pos_count
+        face_tables[i].neg_value = float(face_tables[i].neg_count / num_images_percent)
     
     #fill face tables
     for i in range(num_regions):
-        for j in range(num_training_images):
-            count = training_regions[j][i]
-            label = training_labels[j]
+        for j in range(num_images_percent):
+            count = rand_regions[j][i]
+            label = rand_labels[j]
             for k in range(len(face_tables)):
                 if label == k:
                     #print("k="+str(k)+" max k="+str(len(face_tables)))
@@ -262,6 +298,7 @@ def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_
             correct += 1
     
     percent_correct = float(correct)/float(num_test_images)
+    print(" correct "+str(percent_correct*100)+"% of the time")
     return percent_correct*100
 
 def mira_f(labels, regions, percent, test_labels, test_data_regions):
@@ -269,6 +306,14 @@ def mira_f(labels, regions, percent, test_labels, test_data_regions):
     num_images = len(labels)
     num_regions = len(regions[0])
     #print("num_images="+str(num_images))
+    
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_images)
+        rand_regions.append(regions[rand_int])
+        rand_labels.append(labels[rand_int])
     
     bias_f = random.choice([-1,0,1])
     bias_nf = random.choice([-1,0,1])
@@ -295,32 +340,32 @@ def mira_f(labels, regions, percent, test_labels, test_data_regions):
             f_f = 0
             f_nf = 0
             for i in range(num_regions):
-                f_f += (w_f[i]*regions[n][i])
-                f_nf += (w_nf[i]*regions[n][i])
+                f_f += (w_f[i]*rand_regions[n][i])
+                f_nf += (w_nf[i]*rand_regions[n][i])
             f_f += bias_f
             f_nf += bias_nf
-            if np.all(f_f >= f_nf) and labels[n] != 1:
+            if np.all(f_f >= f_nf) and rand_labels[n] != 1:
                 sub = np.subtract(w_f, w_nf)
-                up = np.dot(sub, regions[n]) + 1
-                den = np.dot(regions[n], regions[n]) * 2
+                up = np.dot(sub, rand_regions[n]) + 1
+                den = np.dot(rand_regions[n], rand_regions[n]) * 2
                 t = up / den
                 #print(t)
                 c = 0.0013
                 t = min(t, c)
-                tf = np.multiply(t, regions[n])
+                tf = np.multiply(t, rand_regions[n])
                 w_f = np.subtract(w_f, tf)
                 w_nf = np.add(w_nf, tf)
                 bias_f -= tf
                 bias_nf += tf
-            elif np.all(f_f < f_nf) and labels[n] == 1:
+            elif np.all(f_f < f_nf) and rand_labels[n] == 1:
                 sub = np.subtract(w_nf, w_f)
-                up = np.dot(sub, regions[n]) + 1
-                den = np.dot(regions[n], regions[n]) * 2
+                up = np.dot(sub, rand_regions[n]) + 1
+                den = np.dot(rand_regions[n], rand_regions[n]) * 2
                 t = up / den
                 #print(t)
                 c = 0.0013
                 t = min(t, c)
-                tf = np.multiply(t, regions[n])
+                tf = np.multiply(t, rand_regions[n])
                 w_f = np.add(w_f, tf)
                 w_nf = np.subtract(w_nf, tf)
                 bias_f += tf
@@ -353,12 +398,21 @@ def mira_f(labels, regions, percent, test_labels, test_data_regions):
     #Output results somehow
     percent_correct = float(correct)/float(num_test_images)
     print(" correct "+str(percent_correct*100)+"% of the time")
-    return percent_correct
+    return percent_correct*100
 
 def mira_d(labels, regions, percent, test_labels, test_data_regions):
     #init important values
     num_images = len(labels)
     num_regions = len(regions[0])
+    
+    rand_regions = []
+    rand_labels = []
+    num_images_percent = int(num_images * percent)
+    for i in range(num_images_percent):
+        rand_int = int(random.random()*num_images)
+        rand_regions.append(regions[rand_int])
+        rand_labels.append(labels[rand_int])
+    
     #init bias
     bias = [random.choice([-1,0,1]) for i in range(10)]
     #init w
@@ -373,7 +427,7 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
             f = [0 for i in range(10)]
             for i in range(len(f)):
                 for j in range(num_regions):
-                    f[i] += (w[i][j]*regions[n][j])
+                    f[i] += (w[i][j]*rand_regions[n][j])
                     #print("")
                 f[i] += bias[i]
                 
@@ -382,23 +436,23 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
             max_index = np_get_max_index(f)
             #print("max x = f["+str(max_index)+"] = "+str(f[max_index]))
             #print("label = "+str(labels[n]))
-            if max_index != labels[n]:
+            if max_index != rand_labels[n]:
                 penalties += 1
                 # wy = w[max_index]
                 # wy* = w[labels[n]]
                 # f = region[n]
                 #decrease w of max_index and increase w of labels[n]
-                sub = np.subtract(w[max_index], w[labels[n]])
-                up = np.dot(sub, regions[n]) + 1
-                den = np.dot(regions[n], regions[n]) * 2
+                sub = np.subtract(w[max_index], w[rand_labels[n]])
+                up = np.dot(sub, rand_regions[n]) + 1
+                den = np.dot(rand_regions[n], rand_regions[n]) * 2
                 t = up / den
                 #print(t)
-                c = 0.005
+                c = 0.003
                 t = min(t, c)
                 # print(t)
-                tf = np.multiply(t, regions[n])
+                tf = np.multiply(t, rand_regions[n])
                 w[max_index] = np.subtract(w[max_index], tf)
-                w[labels[n]] = np.add(w[labels[n]], tf)
+                w[rand_labels[n]] = np.add(w[rand_labels[n]], tf)
                 '''
                 for i in range(num_regions):
                     w[max_index][i] -= regions[n][i]
@@ -407,7 +461,7 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
                 #decrease bias of max_index
                 bias[max_index] -= tf
                 #increase bias of labels[n]
-                bias[labels[n]] += tf
+                bias[rand_labels[n]] += tf
         #print("penalties = "+str(penalties))
     #data to test against
     #test_labels ad test_data_regions
@@ -429,7 +483,7 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
             
     percent_correct = float(correct)/float(num_test_images)
     print(" correct "+str(percent_correct*100)+"% of the time")
-    return percent_correct
+    return percent_correct*100
 
 def count_value(list, val):
     count = 0
@@ -455,9 +509,10 @@ def np_get_max_index(list):
 #percent = input("Enter the percentage of images to train against (0.5 for 50%): ")
 #algorithm = input("Enter the algorithm to use ('p' for perceptron, 'n' for naive bayes, 'o' other algortihm TBD): ")
 
+start = timeit.default_timer()
 type = 'd'
 percent = 1.0
-algorithm = 'o'
+algorithm = 'm'
 
 num_x_regions = 7
 num_y_regions = 7
@@ -469,30 +524,52 @@ test_labels = test_labels(type,1.0)
 test_data_regions = test_data(type,1.0, num_x_regions, num_y_regions)
 
 sum = 0
+vals = []
 runs = 10
 if algorithm == 'n':
-    steps = [x*0.1 for x in range(1,int((percent*10)+1))]
-    for step in steps:
+    for i in range(runs):
+        ind_start = timeit.default_timer()
         if type == 'f':
-            val = naive_bayes_f(labels, data_regions, step, test_labels, test_data_regions)
-            print(str(int(step*100))+"% of training data was correct "+str(val)+"% of the time")
+            val = naive_bayes_f(labels, data_regions, percent, test_labels, test_data_regions)
             sum += val
+            vals.append(val)
         else:
-            val = naive_bayes_d(labels, data_regions, step, test_labels, test_data_regions)
-            print(str(int(step*100))+"% of training data was correct "+str(val)+"% of the time")
+            val = naive_bayes_d(labels, data_regions, percent, test_labels, test_data_regions)
             sum += val
-    print("average correctness = "+str((sum/len(steps))))
+            vals.append(val)
+        ind_end = timeit.default_timer()
+        print("This run took "+str(ind_end-ind_start)+" seconds")
+    print("average correctness = "+str((sum/runs)))
+    print("stdev = "+str(statistics.stdev(vals)))
 elif algorithm == 'p':
     for i in range(runs):
+        ind_start = timeit.default_timer()
         if type == 'f':
-            sum += perceptron_f(labels, data_regions, percent, test_labels, test_data_regions)
+            val = perceptron_f(labels, data_regions, percent, test_labels, test_data_regions)
+            sum += val
+            vals.append(val)
         else:
-            sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
-    print("average correctness = "+str((sum/runs)*100))
+            val = perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
+            sum += val
+            vals.append(val)
+        ind_end = timeit.default_timer()
+        print("This run took "+str(ind_end-ind_start)+" seconds")
+    print("average correctness = "+str((sum/runs)))
+    print("std deviation = "+str(statistics.stdev(vals)))
 else:
     for i in range(runs):
+        ind_start = timeit.default_timer()
         if type == 'f':
-            sum += mira_f(labels, data_regions, percent, test_labels, test_data_regions)
+            val = mira_f(labels, data_regions, percent, test_labels, test_data_regions)
+            sum+= val
+            vals.append(val)
         else:
-            sum += mira_d(labels, data_regions, percent, test_labels, test_data_regions)
-    print("average correctness = "+str((sum/runs)*100))
+            val = mira_d(labels, data_regions, percent, test_labels, test_data_regions)
+            sum+= val
+            vals.append(val)
+        ind_end = timeit.default_timer()
+        print("This run took "+str(ind_end-ind_start)+" seconds")
+    print("average correctness = "+str((sum/runs)))
+    print("std deviation = "+str(statistics.stdev(vals)))
+stop = timeit.default_timer()
+print("total time = "+str(stop - start)+" seconds")
