@@ -23,11 +23,15 @@ def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_images)
-        rand_regions.append(regions[rand_int])
-        rand_labels.append(labels[rand_int])
-        
+    if percent == 1.0:
+        rand_regions = regions
+        rand_labels = labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_images)
+            rand_regions.append(regions[rand_int])
+            rand_labels.append(labels[rand_int])
+            
     
     bias = random.choice([-1,0,1])
     #create array of w values
@@ -102,11 +106,15 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_images)
-        rand_regions.append(regions[rand_int])
-        rand_labels.append(labels[rand_int])
-    
+    if percent == 1.0:
+        rand_regions = regions
+        rand_labels = labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_images)
+            rand_regions.append(regions[rand_int])
+            rand_labels.append(labels[rand_int])
+        
     #init bias
     bias = [random.choice([-1,0,1]) for i in range(10)]
     #init w
@@ -171,10 +179,14 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_training_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_training_images)
-        rand_regions.append(training_regions[rand_int])
-        rand_labels.append(training_labels[rand_int])
+    if percent == 1.0:
+        rand_regions = training_regions
+        rand_labels = training_labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_training_images)
+            rand_regions.append(training_regions[rand_int])
+            rand_labels.append(training_labels[rand_int])
     
     #init table class
     #since type is f, image is 60x70
@@ -235,10 +247,14 @@ def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_training_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_training_images)
-        rand_regions.append(training_regions[rand_int])
-        rand_labels.append(training_labels[rand_int])
+    if percent == 1.0:
+        rand_regions = training_regions
+        rand_labels = training_labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_training_images)
+            rand_regions.append(training_regions[rand_int])
+            rand_labels.append(training_labels[rand_int])
     
     #init table class
     #since type is f, image is 28x28
@@ -310,10 +326,14 @@ def mira_f(labels, regions, percent, test_labels, test_data_regions):
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_images)
-        rand_regions.append(regions[rand_int])
-        rand_labels.append(labels[rand_int])
+    if percent == 1.0:
+        rand_regions = regions
+        rand_labels = labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_images)
+            rand_regions.append(regions[rand_int])
+            rand_labels.append(labels[rand_int])
     
     bias_f = random.choice([-1,0,1])
     bias_nf = random.choice([-1,0,1])
@@ -408,10 +428,14 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
     rand_regions = []
     rand_labels = []
     num_images_percent = int(num_images * percent)
-    for i in range(num_images_percent):
-        rand_int = int(random.random()*num_images)
-        rand_regions.append(regions[rand_int])
-        rand_labels.append(labels[rand_int])
+    if percent == 1.0:
+        rand_regions = regions
+        rand_labels = labels
+    else:
+        for i in range(num_images_percent):
+            rand_int = int(random.random()*num_images)
+            rand_regions.append(regions[rand_int])
+            rand_labels.append(labels[rand_int])
     
     #init bias
     bias = [random.choice([-1,0,1]) for i in range(10)]
