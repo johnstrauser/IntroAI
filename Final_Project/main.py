@@ -485,9 +485,9 @@ if algorithm == 'n':
 elif algorithm == 'p':
     for i in range(runs):
         if type == 'f':
-            sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
-        else:
             sum += perceptron_f(labels, data_regions, percent, test_labels, test_data_regions)
+        else:
+            sum += perceptron_d(labels, data_regions, percent, test_labels, test_data_regions)
     print("average correctness = "+str((sum/runs)*100))
 else:
     for i in range(runs):
