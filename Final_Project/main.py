@@ -88,6 +88,11 @@ def perceptron_f(labels, regions, percent, test_labels, test_data_regions):
         for i in range(num_regions):
             f += (w[i]*test_data_regions[n][i])
         f += bias
+        '''
+        if n % 10 == 0:
+            print("f = "+str(f))
+            print("label = "+str(test_labels[n]))
+        '''
         if f >= 0 and test_labels[n]==1:
             correct += 1
         elif f < 0 and test_labels[n] == 0:
@@ -164,6 +169,12 @@ def perceptron_d(labels, regions, percent, test_labels, test_data_regions):
                 
             f[i] += bias[i]
         max_index = get_max_index(f)
+        '''
+        if n % 10 == 0:
+            print("f = "+str(f))
+            print("max f = "+str(max_index))
+            print("label = "+str(test_labels[n]))
+        '''
         if max_index == test_labels[n]:
             correct += 1
             
@@ -230,6 +241,11 @@ def naive_bayes_f(training_labels, training_regions, percent, test_labels, test_
             prob_pos *= face_tables.pos_table[i][region_count]
             prob_neg *= face_tables.neg_table[i][region_count]
         total_prob = (prob_pos * face_tables.pos_value)/(prob_neg * face_tables.neg_value)
+        '''
+        if n % 10 == 0:
+            print("total_prob = "+str(total_prob))
+            print("label = "+str(test_labels[n]))
+        '''
         if total_prob >= 1 and test_labels[n] == 1:
             correct += 1
         elif total_prob < 1 and test_labels[n] == 0:
@@ -310,6 +326,12 @@ def naive_bayes_d(training_labels, training_regions, percent, test_labels, test_
         for i in range(10):
             total_prob.append((prob_pos[i] * face_tables[i].pos_value)/(prob_neg[i] * face_tables[i].neg_value))
         max_index = get_max_index(total_prob)
+        '''
+        if n % 10 == 0:
+            print("total_prob = "+str(total_prob))
+            print("max_index = "+str(max_index))
+            print("label = "+str(test_labels[n]))
+        '''
         if max_index == test_labels[n]:
             correct += 1
     
@@ -410,6 +432,12 @@ def mira_f(labels, regions, percent, test_labels, test_data_regions):
             f_nf_t += (w_nf[i]*test_data_regions[n][i])
         f_f_t += bias_f
         f_nf_t += bias_nf
+        '''
+        if n % 10 == 0:
+            print("f_f_t = "+str(f_f_t))
+            print("f_nf_t = "+str(f_nf_t))
+            print("label = "+str(test_labels[n]))
+        '''
         if np.all(f_f_t >= f_nf_t) and test_labels[n]==1:
             correct += 1
         elif np.all(f_f_t < f_nf_t) and test_labels[n] == 0:
@@ -502,6 +530,12 @@ def mira_d(labels, regions, percent, test_labels, test_data_regions):
                 
             f[i] += bias[i]
         max_index = np_get_max_index(f)
+        '''
+        if n % 10 == 0:
+            print("f = "+str(f))
+            print("max_index = "+str(max_index))
+            print("label = "+str(test_labels[n]))
+        '''
         if max_index == test_labels[n]:
             correct += 1
             
