@@ -1,0 +1,29 @@
+Problem 1:
+
+	A	B	C	D	E	F
+	H	C	C	H	C	C
+	
+	1. Filtering:
+		P(X3 = A | Hot1, Cold2, Cold3) = P(Cold3 | X3 = A) = 0.0 (Rover cannot be at A on X3 since it indicates that it is cold on X3)
+		P(X3 = B | Hot1, Cold2, Cold3) = P(X2 = B | Cold2) = 1.00 so P(X3 = B | Cold3) = 0.2 since the rover has a 0.2 chance to not move
+		P(X3 = C | Hot1, Cold2, Cold3) = 1.0 - 0.2 = 0.8 since we know that the rover has to be in either B or C and there is a 0.2 chance it is in B
+		P(X3 = D | Hot1, Cold2, Cold3) = 0.0 (Rover starts at A. Therefore it is not possible for it to move 4 locations in 3 days)
+		P(X3 = E | Hot1, Cold2, Cold3) = 0.0 (Rover starts at A. Therefore it is not possible for it to move 5 locations in 3 days)
+		P(X3 = F | Hot1, Cold2, Cold3) = 0.0 (Rover starts at A. Therefore it is not possible for it to move 6 locations in 3 days)
+		
+	2. Smoothing:
+		Given that it is only day 2 and the rover can only move one location per day P(X2) for C through F is 0.0
+		From previous part:
+			P(X2 = A | Cold2) = 0.0 since it cannot be cold in A
+			P(X2 = B | Cold2) = 1.0
+	
+	3. Prediction:
+		
+	
+	4. Prediction:
+		P(X4 = A| Hot1,Cold2,Cold3) = 0.0 (Rover cannot move left and clearly moves right at least once to get Cold2)
+		P(X4 = B| Hot1,Cold2,Cold3) = 0.2 * P(X3 = B | Hot1,Cold2,Cold3) = 0.2 * 0.2 (from part 1) = 0.04
+		P(X4 = C| Hot1,Cold2,Cold3) = (0.8 * P(X3 = B| Hot1,Cold2,Cold3)) + (0.2 * P(X3 = C|Hot1,Cold2,Cold3)) = (0.8 * 0.2 (from part 1)) + (0.2 * 0.8 (from part 1)) = 0.32
+		P(X4 = D| Hot1,Cold2,Cold3) = 0.8 * P(X3 = C| Hot1,Cold2,Cold3) = 0.8 * 0.8 (from part 1) = 0.64
+		P(X4 = E| Hot1,Cold2,Cold3) = 0.0 (Rover cannot move 5 times in 4 days)
+		P(X4 = F| Hot1,Cold2,Cold3) = 0.0 (Rover cannot move 6 times in 4 days)
